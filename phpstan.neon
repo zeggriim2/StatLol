@@ -1,0 +1,7 @@
+parameters:
+    doctrine:
+        objectManagerLoader: build/doctrine.php
+    checkGenericClassInNonGenericObjectType: false
+    level: 7
+    paths:
+        - src
