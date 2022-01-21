@@ -31,5 +31,9 @@ analyze:
 	php bin/console lint:twig templates/
 	php vendor/bin/phpstan analyse -c phpstan.neon src --level 7 --no-progress
 
+
+phpcs:
+	php vendor/bin/phpcs
+
 phpcbf:
 	php vendor/bin/phpcbf

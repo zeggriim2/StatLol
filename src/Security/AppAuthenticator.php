@@ -28,7 +28,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function authenticate(Request $request): Passport
+    public function authenticate(Request $request): ?Passport
     {
         $email = $request->request->get('email', '');
 
