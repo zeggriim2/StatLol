@@ -1,3 +1,7 @@
+install:
+	cp .env.dist .env.$(env).local
+	composer install
+
 database-dev:
 	php bin/console doctrine:database:drop --if-exists --force --env=dev
 	php bin/console doctrine:database:create --env=dev
@@ -31,6 +35,11 @@ analyze:
 	php bin/console lint:twig templates/
 	php vendor/bin/phpstan analyse -c phpstan.neon src --level 7 --no-progress
 
+phpstan:
+	php vendor/bin/phpstan analyse -c phpstan.neon src --level 7 --no-progress
+
+test:
+	php bin/phpunit --testdox
 
 phpcs:
 	php vendor/bin/phpcs
