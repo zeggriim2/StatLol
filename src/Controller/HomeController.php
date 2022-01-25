@@ -2,19 +2,20 @@
 
 namespace App\Controller;
 
-use App\Services\API\LOL\SummonerApi;
+use App\Services\API\LOL\ChampionMasteryApi;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
+     * @param ChampionMasteryApi $championMasteryApi
+     * @return Response
      */
-    public function home(SummonerApi $summonerApi): Response
+    public function home(ChampionMasteryApi $championMasteryApi): Response
     {
-        $summonerApi->SummonerBySummonerName("jarkalien");
         return $this->render("home.html.twig");
     }
 }
