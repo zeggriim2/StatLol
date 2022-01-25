@@ -2,21 +2,21 @@
 
 namespace App\Tests;
 
-use App\Services\API\LOL\ChampionApi;
+use App\Services\API\LOL\ChampionRotationApi;
 use App\Services\API\LOL\Model\ChampionRotation;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class ChampionApiTest extends KernelTestCase
+class ChampionRotationApiTest extends KernelTestCase
 {
-    private ?ChampionApi $championApi;
+    private ?ChampionRotationApi $championApi;
 
     protected function setUp(): void
     {
-        $this->championApi = static::getContainer()->get(ChampionApi::class);
+        $this->championApi = static::getContainer()->get(ChampionRotationApi::class);
     }
 
 
-    public function testChampionRotation()
+    public function testChampionRotationSuccess()
     {
         $this->assertInstanceOf(
             ChampionRotation::class,

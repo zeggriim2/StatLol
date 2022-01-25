@@ -2,22 +2,26 @@
 
 namespace App\Tests;
 
+use App\Services\API\LOL\ChampionRotationApi;
 use App\Services\API\LOL\Model\Summoner;
 use App\Services\API\LOL\SummonerApi;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class SummonerApiTest extends WebTestCase
+class SummonerApiTest extends KernelTestCase
 {
-    private SummonerApi $summonerApi;
+    public ?SummonerApi $summonerApi;
 
     protected function setUp(): void
     {
-        $this->summonerApi = self::getContainer()->get(SummonerApi::class);
+        $this->summonerApi = static::getContainer()->get(SummonerApi::class);
     }
 
     public function testSummonerByNameSuccess()
     {
-        $this->assertInstanceOf(Summoner::class, $this->summonerApi->summonerBySummonerName("jarkalien"));
+        $this->assertInstanceOf(
+            Summoner::class,
+            $this->summonerApi->summonerBySummonerName("jarkalien")
+        );
     }
 
     public function testSummonerByNameBad()
