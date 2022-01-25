@@ -6,7 +6,7 @@ use App\Services\API\LOL\Model\ChampionRotation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
-class ChampionApi
+class ChampionRotationApi
 {
     private const URL_CHAMPION_ROTATION = "https://{region}.api.riotgames.com/lol/platform/v3/champion-rotations";
 
@@ -29,7 +29,7 @@ class ChampionApi
                 "region" => $this->baseApi->platform
             ]
         );
-
+        /** @var array<string,array<int>|int>|null $championRotation */
         $championRotation = $this->baseApi->callApi(
             $url,
             Request::METHOD_GET,
@@ -47,6 +47,11 @@ class ChampionApi
         return $this->denormalize($championRotation, ChampionRotation::class);
     }
 
+    /**
+     * @param array<string,array<int>|int> $data
+     * @param string $type
+     * @return ChampionRotation
+     */
     private function denormalize(array $data, string $type): ChampionRotation
     {
         return $this->denormalizer->denormalize($data, $type);
