@@ -1,6 +1,12 @@
+.PHONY: tests install fixtures database prepare tests phpstan php-cs-fixer composer-valid doctrine fix analyse
+
 install:
 	cp .env.dist .env.$(env).local
+	sed -i -e 's/DATABASE_USER/$(db_user)/' .env.$(env).local
+	sed -i -e 's/DATABASE_PASSWORD/$(db_password)/' .env.$(env).local
+	sed -i -e 's/ENV/$(env)/' .env.$(env).local
 	composer install
+	make prepare env=$(env)
 
 database-dev:
 	php bin/console doctrine:database:drop --if-exists --force --env=dev
