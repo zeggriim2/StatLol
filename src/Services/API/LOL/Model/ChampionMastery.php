@@ -13,54 +13,34 @@ class ChampionMastery
     private int $championPoints;
     private int $tokensEarned;
 
-    /**
-     * @return int
-     */
     public function getChampionPointsUntilNextLevel(): int
     {
         return $this->championPointsUntilNextLevel;
     }
 
-    /**
-     * @param int $championPointsUntilNextLevel
-     * @return ChampionMastery
-     */
     public function setChampionPointsUntilNextLevel(int $championPointsUntilNextLevel): ChampionMastery
     {
         $this->championPointsUntilNextLevel = $championPointsUntilNextLevel;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isChestGranted(): bool
     {
         return $this->chestGranted;
     }
 
-    /**
-     * @param bool $chestGranted
-     * @return ChampionMastery
-     */
     public function setChestGranted(bool $chestGranted): ChampionMastery
     {
         $this->chestGranted = $chestGranted;
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getChampionId(): int
     {
         return $this->championId;
     }
 
-    /**
-     * @param int $championId
-     * @return ChampionMastery
-     */
     public function setChampionId(int $championId): ChampionMastery
     {
         $this->championId = $championId;
@@ -100,9 +80,6 @@ class ChampionMastery
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getChampionPoints(): int
     {
         return $this->championPoints;
