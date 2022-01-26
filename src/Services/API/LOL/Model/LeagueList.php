@@ -2,6 +2,8 @@
 
 namespace App\Services\API\LOL\Model;
 
+use App\Services\API\LOL\Model\League\LeagueEntries;
+
 class LeagueList
 {
     private string $leagueId;
@@ -9,9 +11,9 @@ class LeagueList
     private string $queue;
     private string $name;
     /**
-     * @var array<array-key,array<string,int|string>>
+     * @var LeagueEntries[]|null
      */
-    private array $entries;
+    private ?array $entries;
 
     public function getLeagueId(): string
     {
@@ -58,17 +60,17 @@ class LeagueList
     }
 
     /**
-     * @return array<array-key,array<string,int|string>>
+     * @return array<array-key,LeagueEntries>|null
      */
-    public function getEntries(): array
+    public function getEntries(): ?array
     {
         return $this->entries;
     }
 
     /**
-     * @param array<array-key,array<string,int|string>> $entries
+     * @param array<array-key,LeagueEntries>|null $entries
      */
-    public function setEntries(array $entries): LeagueList
+    public function setEntries(?array $entries): LeagueList
     {
         $this->entries = $entries;
         return $this;
