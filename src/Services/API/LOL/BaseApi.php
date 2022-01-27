@@ -2,6 +2,7 @@
 
 namespace App\Services\API\LOL;
 
+use phpDocumentor\Reflection\Types\ArrayKey;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -40,7 +41,7 @@ class BaseApi
      * @param string $method
      * @param array<string,string|array<string|string>> $options
      * @param string $return
-     * @return array<array-key|string|int,int|string|array<array-key|string|int,int|string>>|string|null
+     * @return string|array<int|string|ArrayKey,int|string|bool>|null
      */
     public function callApi(string $url, string $method = "GET", array $options = [], string $return = "array")
     {
