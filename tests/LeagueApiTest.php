@@ -3,7 +3,9 @@
 namespace App\Tests;
 
 use App\Services\API\LOL\LeagueApi;
+use App\Services\API\LOL\Model\Config\Division;
 use App\Services\API\LOL\Model\Config\Queue;
+use App\Services\API\LOL\Model\Config\Tier;
 use App\Services\API\LOL\Model\League;
 use App\Services\API\LOL\Model\League\LeagueEntries;
 use App\Services\API\LOL\Model\LeagueList;
@@ -211,5 +213,56 @@ class LeagueApiTest extends KernelTestCase
     public function testLeagueMasterByQueueRankedEmpty()
     {
         $this->assertNull($this->leagueApi->leagueMasterByQueue(''));
+    }
+
+    public function testLeagueByQueueByTierByDivision()
+    {
+        $leagueList = $this->leagueApi->leagueByQueueByTierByDivision(
+            Queue::RANKED_SOLO,
+            Tier::TIER_DIAMOND,
+            Division::DIVISION_I
+        );
+
+        $this->assertIsArray($leagueList);
+
+        foreach ($leagueList as $league) {
+            $this->assertInstanceOf(League::class, $league);
+        }
+    }
+
+    public function testLeagueByQueueByTierByDivisionBad()
+    {
+        $this->assertNull($this->leagueApi->leagueByQueueByTierByDivision(
+            "gareg",
+            "zegaeth",
+            "srbgaertharjt"
+        ));
+    }
+
+    public function testLeagueByQueueByTierByDivisionEmptyQueue()
+    {
+        $this->assertNull($this->leagueApi->leagueByQueueByTierByDivision(
+            "",
+            Tier::TIER_DIAMOND,
+            Division::DIVISION_I
+        ));
+    }
+
+    public function testLeagueByQueueByTierByDivisionEmptyTier()
+    {
+        $this->assertNull($this->leagueApi->leagueByQueueByTierByDivision(
+            Queue::RANKED_SOLO,
+            "",
+            Division::DIVISION_I
+        ));
+    }
+
+    public function testLeagueByQueueByTierByDivisionEmptyDivision()
+    {
+        $this->assertNull($this->leagueApi->leagueByQueueByTierByDivision(
+            Queue::RANKED_SOLO,
+            Tier::TIER_DIAMOND,
+            ""
+        ));
     }
 }

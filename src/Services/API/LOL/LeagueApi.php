@@ -2,7 +2,9 @@
 
 namespace App\Services\API\LOL;
 
+use App\Services\API\LOL\Model\Config\Division;
 use App\Services\API\LOL\Model\Config\Queue;
+use App\Services\API\LOL\Model\Config\Tier;
 use App\Services\API\LOL\Model\League;
 use App\Services\API\LOL\Model\LeagueList;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +24,8 @@ class LeagueApi
         self::URL_RACINE . "league/v4/grandmasterleagues/by-queue/{queue}";
     private const URL_LEAGUE_MASTER_QUEUE =
         self::URL_RACINE . "league/v4/masterleagues/by-queue/{queue}";
-
+    private const URL_LEAGUE_QUEUE_TIER_DIVISION =
+        self::URL_RACINE . "league/v4/entries/{queue}/{tier}/{division}";
 
     private BaseApi $baseApi;
     private DenormalizerInterface $denormalizer;
@@ -197,6 +200,53 @@ class LeagueApi
         return $this->denormalize($leagueMaster);
     }
 
+    /**
+     * @param string $queue
+     * @param string $tier
+     * @param string $division
+     * @return array<array-key,League>|null
+     */
+    public function leagueByQueueByTierByDivision(
+        string $queue,
+        string $tier,
+        string $division
+    ): ?array {
+
+        if (strlen($queue) <= 0 || strlen($tier) <= 0 || strlen($division) <= 0) {
+            return null;
+        }
+
+        if (
+            !in_array($queue, Queue::ALL_QEUEUES) ||
+            !in_array($tier, Tier::ALL_TIERS) ||
+            !in_array($division, Division::ALL_DIVISION)
+        ) {
+            return null;
+        }
+
+        $url = $this->baseApi->constructUrl(
+            self::URL_LEAGUE_QUEUE_TIER_DIVISION,
+            [
+                "platform" => $this->baseApi->platform,
+                "queue" => $queue,
+                "tier" => $tier,
+                "division" => $division
+            ]
+        );
+
+        /** @var array<array-key,array<string,int|string|bool>> $league */
+        $league = $this->baseApi->callApi(
+            $url,
+            Request::METHOD_GET,
+            [
+                "headers" => [
+                    "X-Riot-Token" => $this->baseApi->apiKey
+                ]
+            ]
+        );
+
+        return $this->denormalizeArray($league);
+    }
 
     /**
      * @param array<array-key,array<string,int|string|bool>> $datas
