@@ -2,9 +2,7 @@
 
 namespace App\Services\API\LOL;
 
-use phpDocumentor\Reflection\Types\ArrayKey;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class MatchApi
 {
