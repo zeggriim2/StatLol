@@ -2,12 +2,16 @@
 
 namespace App\Services\API\LOL;
 
+use App\Services\API\LOL\Model\Config\Region;
 use Symfony\Component\HttpFoundation\Request;
 
 class MatchApi
 {
+    private const URL_RACINE = "https://{region}.api.riotgames.com/lol/";
     private const URL_LIST_MATCH_PUUID =
-        "https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids";
+        self::URL_RACINE . "match/v5/matches/by-puuid/{puuid}/ids";
+    private const URL_DETAIL_MATCH_MATCHID =
+        self::URL_RACINE . "match/v5/matches/{matchId}";
 
     private BaseApi $baseApi;
 
@@ -30,6 +34,7 @@ class MatchApi
         $url = $this->baseApi->constructUrl(
             self::URL_LIST_MATCH_PUUID,
             [
+                "region" => Region::EUROPE, //TODO A DYNAMISER
                 "puuid" => $puuid
             ]
         );
@@ -46,5 +51,33 @@ class MatchApi
         );
 
         return$league;
+    }
+
+    public function matchByMatchId(string $matchId)
+    {
+        if (strlen($matchId) <= 0) {
+            return null;
+        }
+
+        $url = $this->baseApi->constructUrl(
+            self::URL_DETAIL_MATCH_MATCHID,
+            [
+                "region" => Region::EUROPE,
+                 "matchId" => $matchId
+             ]
+        );
+
+        /** @var array<string,mixed> $matchDetail */
+        $matchDetail = $this->baseApi->callApi(
+            $url,
+            Request::METHOD_GET,
+            [
+                "headers" => [
+                    "X-Riot-Token" => $this->baseApi->apiKey
+                ]
+            ]
+        );
+
+//        return $this->denormalize($matchDetail);
     }
 }
