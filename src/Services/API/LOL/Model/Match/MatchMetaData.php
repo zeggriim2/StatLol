@@ -34,7 +34,7 @@ class MatchMetaData
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     public function getParticipants(): array
     {
@@ -42,7 +42,7 @@ class MatchMetaData
     }
 
     /**
-     * @param array $participants
+     * @param array<string> $participants
      * @return MatchMetaData
      */
     public function setParticipants(array $participants): MatchMetaData

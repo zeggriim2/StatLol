@@ -3,7 +3,9 @@
 namespace App\Services\API\LOL;
 
 use App\Services\API\LOL\Model\Config\Region;
+use App\Services\API\LOL\Model\Matchs;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class MatchApi
 {
@@ -14,11 +16,14 @@ class MatchApi
         self::URL_RACINE . "match/v5/matches/{matchId}";
 
     private BaseApi $baseApi;
+    private DenormalizerInterface $denormalizer;
 
     public function __construct(
-        BaseApi $baseApi
+        BaseApi $baseApi,
+        DenormalizerInterface $denormalizer
     ) {
         $this->baseApi = $baseApi;
+        $this->denormalizer = $denormalizer;
     }
 
     /**
@@ -53,7 +58,7 @@ class MatchApi
         return$league;
     }
 
-    public function matchByMatchId(string $matchId)
+    public function matchByMatchId(string $matchId): ?Matchs
     {
         if (strlen($matchId) <= 0) {
             return null;
@@ -78,6 +83,15 @@ class MatchApi
             ]
         );
 
-//        return $this->denormalize($matchDetail);
+        return $this->denormalize($matchDetail);
+    }
+
+    /**
+     * @param array<string,mixed> $data
+     * @return Matchs
+     */
+    private function denormalize(array $data): Matchs
+    {
+        return $this->denormalizer->denormalize($data, Matchs::class);
     }
 }
