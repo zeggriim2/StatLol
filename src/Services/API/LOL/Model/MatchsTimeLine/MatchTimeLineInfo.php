@@ -2,9 +2,6 @@
 
 namespace App\Services\API\LOL\Model\MatchsTimeLine;
 
-use App\Services\API\LOL\Model\Matchs\MatchTimeLineFrame;
-use App\Services\API\LOL\Model\Matchs\MatchTimeLineParticipant;
-
 class MatchTimeLineInfo
 {
     private int $frameInterval;
