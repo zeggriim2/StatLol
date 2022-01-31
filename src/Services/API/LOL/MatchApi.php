@@ -87,7 +87,7 @@ class MatchApi
         );
 
         /** @var Matchs $matchDetailDenormalize */
-        $matchDetailDenormalize = $this->denormalize($matchDetail, MatchsTimeLine::class);
+        $matchDetailDenormalize = $this->denormalize($matchDetail, Matchs::class);
 
         return $matchDetailDenormalize;
     }
