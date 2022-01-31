@@ -4,6 +4,7 @@ namespace App\Services\API\LOL;
 
 use App\Services\API\LOL\Model\Config\Region;
 use App\Services\API\LOL\Model\Matchs;
+use App\Services\API\LOL\Model\MatchsTimeLine;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
@@ -14,6 +15,8 @@ class MatchApi
         self::URL_RACINE . "match/v5/matches/by-puuid/{puuid}/ids";
     private const URL_DETAIL_MATCH_MATCHID =
         self::URL_RACINE . "match/v5/matches/{matchId}";
+    private const URL_TIMELINE_MATCH =
+        self::URL_RACINE . "match/v5/matches/EUW1_5694485275/timeline";
 
     private BaseApi $baseApi;
     private DenormalizerInterface $denormalizer;
@@ -55,7 +58,7 @@ class MatchApi
             ]
         );
 
-        return$league;
+        return $league;
     }
 
     public function matchByMatchId(string $matchId): ?Matchs
@@ -83,15 +86,49 @@ class MatchApi
             ]
         );
 
-        return $this->denormalize($matchDetail);
+        /** @var Matchs $matchDetailDenormalize */
+        $matchDetailDenormalize = $this->denormalize($matchDetail, MatchsTimeLine::class);
+
+        return $matchDetailDenormalize;
+    }
+
+    public function matchTimeLineByMatchId(string $matchId): ?MatchsTimeLine
+    {
+        if (strlen($matchId) <= 0) {
+            return null;
+        }
+
+        $url = $this->baseApi->constructUrl(
+            self::URL_TIMELINE_MATCH,
+            [
+                "region" => Region::EUROPE,
+                 "matchId" => $matchId
+             ]
+        );
+
+        /** @var array<string,mixed> $matchDetailTimeLine */
+        $matchDetailTimeLine = $this->baseApi->callApi(
+            $url,
+            Request::METHOD_GET,
+            [
+                "headers" => [
+                    "X-Riot-Token" => $this->baseApi->apiKey
+                ]
+            ]
+        );
+
+        /** @var MatchsTimeLine $matchDetailTimeLineDenormalize */
+        $matchDetailTimeLineDenormalize = $this->denormalize($matchDetailTimeLine, MatchsTimeLine::class);
+
+        return $matchDetailTimeLineDenormalize;
     }
 
     /**
      * @param array<string,mixed> $data
-     * @return Matchs
+     * @return Matchs|MatchsTimeLine
      */
-    private function denormalize(array $data): Matchs
+    private function denormalize(array $data, string $type)
     {
-        return $this->denormalizer->denormalize($data, Matchs::class);
+        return $this->denormalizer->denormalize($data, $type);
     }
 }

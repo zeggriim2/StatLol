@@ -6,6 +6,7 @@ use App\Services\API\LOL\ChampionRotationApi;
 use App\Services\API\LOL\MatchApi;
 use App\Services\API\LOL\Model\ChampionRotation;
 use App\Services\API\LOL\Model\Matchs;
+use App\Services\API\LOL\Model\MatchsTimeLine;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class MatchApiTest extends KernelTestCase
@@ -30,5 +31,12 @@ class MatchApiTest extends KernelTestCase
         $matchDetail = $this->matchApi->matchByMatchId("EUW1_5694485275");
 
         $this->assertInstanceOf(Matchs::class, $matchDetail);
+    }
+
+    public function testMatchTimeLineByMatchId()
+    {
+        $matchTimeLine = $this->matchApi->matchTimeLineByMatchId("EUW1_5694485275");
+
+        $this->assertInstanceOf(MatchsTimeLine::class, $matchTimeLine);
     }
 }
