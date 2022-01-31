@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\API\LOL\Model\Match;
+namespace App\Services\API\LOL\Model\MatchsTimeLine;
 
-class MatchMetaData
+class MatchTimeLineMetaData
 {
     private string $dataVersion;
     private string $matchId;
@@ -11,12 +11,13 @@ class MatchMetaData
      */
     private array $participants;
 
+
     public function getDataVersion(): string
     {
         return $this->dataVersion;
     }
 
-    public function setDataVersion(string $dataVersion): MatchMetaData
+    public function setDataVersion(string $dataVersion): MatchTimeLineMetaData
     {
         $this->dataVersion = $dataVersion;
         return $this;
@@ -27,7 +28,7 @@ class MatchMetaData
         return $this->matchId;
     }
 
-    public function setMatchId(string $matchId): MatchMetaData
+    public function setMatchId(string $matchId): MatchTimeLineMetaData
     {
         $this->matchId = $matchId;
         return $this;
@@ -43,9 +44,9 @@ class MatchMetaData
 
     /**
      * @param array<string> $participants
-     * @return MatchMetaData
+     * @return MatchTimeLineMetaData
      */
-    public function setParticipants(array $participants): MatchMetaData
+    public function setParticipants(array $participants): MatchTimeLineMetaData
     {
         $this->participants = $participants;
         return $this;

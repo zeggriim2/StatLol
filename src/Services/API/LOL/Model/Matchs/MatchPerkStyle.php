@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\API\LOL\Model\Match;
+namespace App\Services\API\LOL\Model\Matchs;
 
 class MatchPerkStyle
 {

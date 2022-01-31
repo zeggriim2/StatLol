@@ -2,8 +2,8 @@
 
 namespace App\Services\API\LOL\Model;
 
-use App\Services\API\LOL\Model\Match\MatchInfo;
-use App\Services\API\LOL\Model\Match\MatchMetaData;
+use App\Services\API\LOL\Model\Matchs\MatchInfo;
+use App\Services\API\LOL\Model\Matchs\MatchMetaData;
 
 class Matchs
 {

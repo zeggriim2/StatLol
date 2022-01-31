@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\API\LOL\Model\Match;
+namespace App\Services\API\LOL\Model\MatchsTimeLine;
 
-use App\Services\API\LOL\Model\Match\MatchTimeLineFrame;
-use App\Services\API\LOL\Model\Match\MatchTimeLineParticipant;
+use App\Services\API\LOL\Model\Matchs\MatchTimeLineFrame;
+use App\Services\API\LOL\Model\Matchs\MatchTimeLineParticipant;
 
 class MatchTimeLineInfo
 {

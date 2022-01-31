@@ -2,8 +2,8 @@
 
 namespace App\Services\API\LOL\Model;
 
-use App\Services\API\LOL\Model\Match\MatchTimeLineInfo;
-use App\Services\API\LOL\Model\Match\MatchTimeLineMetaData;
+use App\Services\API\LOL\Model\Matchs\MatchTimeLineInfo;
+use App\Services\API\LOL\Model\Matchs\MatchTimeLineMetaData;
 
 class MatchsTimeLine
 {
