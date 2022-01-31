@@ -10,13 +10,13 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class MatchApi
 {
-    private const URL_RACINE = "https://{region}.api.riotgames.com/lol/";
+//    private const URL_RACINE = "https://{region}.api.riotgames.com/lol/";
     private const URL_LIST_MATCH_PUUID =
-        self::URL_RACINE . "match/v5/matches/by-puuid/{puuid}/ids";
+        BaseApi::URL_RACINE_REGION . "match/v5/matches/by-puuid/{puuid}/ids";
     private const URL_DETAIL_MATCH_MATCHID =
-        self::URL_RACINE . "match/v5/matches/{matchId}";
+        BaseApi::URL_RACINE_REGION . "match/v5/matches/{matchId}";
     private const URL_TIMELINE_MATCH =
-        self::URL_RACINE . "match/v5/matches/EUW1_5694485275/timeline";
+        BaseApi::URL_RACINE_REGION . "match/v5/matches/EUW1_5694485275/timeline";
 
     private BaseApi $baseApi;
     private DenormalizerInterface $denormalizer;

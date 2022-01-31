@@ -8,7 +8,9 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class ChampionRotationApi
 {
-    private const URL_CHAMPION_ROTATION = "https://{region}.api.riotgames.com/lol/platform/v3/champion-rotations";
+//  private const URL_RACINE = "https://{region}.api.riotgames.com/lol/";
+    private const URL_CHAMPION_ROTATION =
+        BaseApi::URL_RACINE_REGION . "platform/v3/champion-rotations";
 
     private BaseApi $baseApi;
     private DenormalizerInterface $denormalizer;

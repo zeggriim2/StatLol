@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class StatusApi
 {
-    private const URL_STATUS = "https://{platform}.api.riotgames.com/lol/status/v3/shard-data";
+    private const URL_STATUS = BaseApi::URL_RACINE_PLATFORM . "status/v3/shard-data";
 
     private BaseApi $baseApi;
     private DenormalizerInterface $denormalizer;

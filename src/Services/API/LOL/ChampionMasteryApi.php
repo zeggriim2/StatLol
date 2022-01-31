@@ -8,12 +8,14 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class ChampionMasteryApi
 {
-    private const URL_RACINE = "https://{platform}.api.riotgames.com/lol/";
+//    private const URL_RACINE = "https://{platform}.api.riotgames.com/lol/";
     private const URL_MASTERY_SUMMONERID =
-        self::URL_RACINE . "champion-mastery/v4/champion-masteries/by-summoner/{summonerId}";
+        BaseApi::URL_RACINE_PLATFORM . "champion-mastery/v4/champion-masteries/by-summoner/{summonerId}";
     private const URL_MASTERY_SUMMONERID_CHAMPIONID =
-        self::URL_RACINE . "champion-mastery/v4/champion-masteries/by-summoner/{summonerId}/by-champion/{championId}";
-    private const URL_CHAMPION_ALL = self::URL_RACINE . "champion-mastery/v4/scores/by-summoner/{summonerId}";
+        BaseApi::URL_RACINE_PLATFORM
+        . "champion-mastery/v4/champion-masteries/by-summoner/{summonerId}/by-champion/{championId}";
+    private const URL_CHAMPION_ALL =
+        BaseApi::URL_RACINE_PLATFORM . "champion-mastery/v4/scores/by-summoner/{summonerId}";
 
     private BaseApi $baseApi;
     private DenormalizerInterface $denormalizer;

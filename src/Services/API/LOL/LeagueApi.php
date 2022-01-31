@@ -12,20 +12,19 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class LeagueApi
 {
-    private const URL_RACINE = "https://{platform}.api.riotgames.com/lol/";
+//    private const URL_RACINE = "https://{platform}.api.riotgames.com/lol/";
     private const URL_LEAGUE_SUMMONERID =
-        self::URL_RACINE . "league/v4/entries/by-summoner/{summonerId}";
-
+        BaseApi::URL_RACINE_PLATFORM . "league/v4/entries/by-summoner/{summonerId}";
     private const URL_LEAGUE_LEAGUEID =
-        self::URL_RACINE . "league/v4/leagues/{leagueId}";
+        BaseApi::URL_RACINE_PLATFORM . "league/v4/leagues/{leagueId}";
     private const URL_LEAGUE_CHALLENGER_QUEUE =
-        self::URL_RACINE . "league/v4/challengerleagues/by-queue/{queue}";
+        BaseApi::URL_RACINE_PLATFORM . "league/v4/challengerleagues/by-queue/{queue}";
     private const URL_LEAGUE_GRANDMASTER_QUEUE =
-        self::URL_RACINE . "league/v4/grandmasterleagues/by-queue/{queue}";
+        BaseApi::URL_RACINE_PLATFORM . "league/v4/grandmasterleagues/by-queue/{queue}";
     private const URL_LEAGUE_MASTER_QUEUE =
-        self::URL_RACINE . "league/v4/masterleagues/by-queue/{queue}";
+        BaseApi::URL_RACINE_PLATFORM . "league/v4/masterleagues/by-queue/{queue}";
     private const URL_LEAGUE_QUEUE_TIER_DIVISION =
-        self::URL_RACINE . "league/v4/entries/{queue}/{tier}/{division}";
+        BaseApi::URL_RACINE_PLATFORM . "league/v4/entries/{queue}/{tier}/{division}";
 
     private BaseApi $baseApi;
     private DenormalizerInterface $denormalizer;

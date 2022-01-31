@@ -8,11 +8,15 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class SummonerApi
 {
-    private const URL_RACINE = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/";
-    private const URL_NAME = self::URL_RACINE . "by-name/{name}";
-    private const URL_ACCOUNTID = self::URL_RACINE . "by-account/{accountId}";
-    private const URL_PUUID = self::URL_RACINE . "by-puuid/{puuid}";
-    private const URL_SUMMONER_ID = self::URL_RACINE . "{summonerId}";
+//    private const URL_RACINE = "https://{platform}.api.riotgames.com/lol/";
+    private const URL_NAME =
+        BaseApi::URL_RACINE_PLATFORM . "summoner/v4/summoners/by-name/{name}";
+    private const URL_ACCOUNTID =
+        BaseApi::URL_RACINE_PLATFORM . "summoner/v4/summoners/by-account/{accountId}";
+    private const URL_PUUID =
+        BaseApi::URL_RACINE_PLATFORM . "summoner/v4/summoners/by-puuid/{puuid}";
+    private const URL_SUMMONER_ID =
+        BaseApi::URL_RACINE_PLATFORM . "summoner/v4/summoners/{summonerId}";
 
     private BaseApi $baseApi;
     private DenormalizerInterface $denormalizer;
