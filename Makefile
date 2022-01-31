@@ -44,7 +44,7 @@ analyze:
 phpstan:
 	php vendor/bin/phpstan analyse -c phpstan.neon src --level 7 --no-progress
 
-test:
+test: ## Test Unitaire 
 	php bin/phpunit --testdox
 
 phpcs:
