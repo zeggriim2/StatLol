@@ -9,7 +9,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class BaseApi
 {
     public const URL_RACINE_REGION = "https://{region}.api.riotgames.com/lol/";
-	public const URL_RACINE_PLATFORM = "https://{platform}.api.riotgames.com/lol/";
+    public const URL_RACINE_PLATFORM = "https://{platform}.api.riotgames.com/lol/";
 
     public string $apiKey;
     public string $platform;
