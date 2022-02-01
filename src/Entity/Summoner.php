@@ -45,12 +45,12 @@ class Summoner
     private int $profileIconId;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private ?\DateTimeImmutable $createdAt = null;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private ?\DateTimeImmutable $updatedAt = null;
 

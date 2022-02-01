@@ -10,19 +10,17 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
 
 class InitDivision extends Command
 {
-
-    private DoctrineManagerRegistry $doctrine;
+    private ManagerRegistry $doctrine;
     private DivisionRepository $divisionRepository;
 
     /**
      * @var string|null
      */
     protected static $defaultName = "init:division";
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setHelp("Initie l'entité Division");
@@ -36,29 +34,34 @@ class InitDivision extends Command
         $compteurExiste = [];
 
         foreach (Division::ALL_DIVISION as $division) {
-            if($this->divisionRepository->findOneBy(["name" => $division]) === null) {
+            if ($this->divisionRepository->findOneBy(["name" => $division]) === null) {
                 $this->compteur($compteurCreate, $division);
                 $divisionEntity = (new EntityDivision())
                     ->setName($division)
                 ;
                 $entityManager->persist($divisionEntity);
             }
-            $this->compteur($compteurExiste,$division);
-        }       
+            $this->compteur($compteurExiste, $division);
+        }
         $entityManager->flush();
 
         return Command::SUCCESS;
     }
 
-    private function compteur(array &$compteur,string $name) {
+    /**
+     * @param array<string> $compteur
+     * @param string $name
+     * @return void
+     */
+    private function compteur(array &$compteur, string $name): void
+    {
         $compteur[] = $name;
     }
 
     public function __construct(
         ManagerRegistry $doctrine,
         DivisionRepository $divisionRepository
-    )
-    {
+    ) {
         $this->doctrine = $doctrine;
         $this->divisionRepository = $divisionRepository;
         parent::__construct();

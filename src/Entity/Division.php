@@ -16,17 +16,17 @@ class Division
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     public function getId(): ?int
     {
@@ -60,7 +60,7 @@ class Division
     /**
      * @ORM\PrePersist
     */
-    public function PrePersistFunction(): void
+    public function prePersistFunction(): void
     {
         $this->setCreatedAt(new \DateTimeImmutable('now'));
     }
