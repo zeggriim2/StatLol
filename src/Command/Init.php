@@ -14,63 +14,57 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class Init extends Command
 {
-
     private KernelInterface $kernel;
-    public $
 
     /**
      * @var string|null
      */
     protected static $defaultName = "init:init";
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->addArgument("type", InputArgument::IS_ARRAY, "", ["all"])
+            ->addArgument("types", InputArgument::IS_ARRAY, "", ["all"])
             ->setHelp("Initie l'entité Queue");
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $type = $input->getArgument("type");
+        $types = $input->getArgument("types");
 
-        if($type[0] !== "all"){
+
+        if ($types[0] !== "all") {
             $type[] = "queue";
             $type[] = "tier";
             $type[] = "division";
         } else {
-        
+            foreach ($types as $type) {
+                $namespace = "App\Command\Init" . trim(ucfirst($type));
+                if (class_exists($namespace)) {
+                    $this->executeCommand($type);
+                }
+            }
         }
+        return Command::SUCCESS;
+    }
 
-
-
-
-
-
-        dd($type);
+    private function executeCommand(string $type): void
+    {
         $application = new Application($this->kernel);
         $application->setAutoExit(false);
 
         $inputAppli = new ArrayInput([
-            "command" => "init:queue"
+            "command" => "init:$type"
         ]);
 
         $outputAppli = new BufferedOutput();
         $application->run($inputAppli, $outputAppli);
-
-        dd($outputAppli);
-
-        return Command::SUCCESS;
     }
 
-    private function compteur(array &$compteur,string $name) {
-        $compteur[] = $name;
-    }
 
     public function __construct(
         KernelInterface $kernel
-    )
-    {
+    ) {
         $this->kernel = $kernel;
         parent::__construct();
     }
