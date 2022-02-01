@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\SummonerRepository;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=SummonerRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Summoner
 {
@@ -45,12 +47,12 @@ class Summoner
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private \DateTimeImmutable $createdAt;
+    private ?\DateTimeImmutable $createdAt = null;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private \DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -139,5 +141,17 @@ class Summoner
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+    */
+    public function updatedTimestamps(): void
+    {
+        $this->setUpdatedAt(new \DateTimeImmutable('now'));
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new \DateTimeImmutable('now'));
+        }
     }
 }
