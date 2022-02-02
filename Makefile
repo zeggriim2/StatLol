@@ -16,12 +16,12 @@ database-dev:
 database-test:
 	php bin/console doctrine:database:drop --if-exists --force --env=test
 	php bin/console doctrine:database:create --env=test
-	php bin/console doctrine:schema:update --force --env=test
+	php bin/console doctrine:schema:update --force --env=test --no-interaction
 
 database-migration-dev:
 	php bin/console doctrine:database:drop --if-exists --force --env=dev
 	php bin/console doctrine:database:create --env=dev
-	php bin/console doctrine:migrations:migrate --env=dev
+	php bin/console doctrine:migrations:migrate --env=dev --no-interaction
 
 database-migration-test:
 	php bin/console doctrine:database:create --if-exists --force --env=test
