@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Command;
+namespace App\Command\Initialisation;
 
-use App\Entity\Queue as EntityQueue;
-use App\Repository\QueueRepository;
-use App\Services\API\LOL\Model\Config\Queue;
+use App\Entity\Division as EntityDivision;
+use App\Repository\DivisionRepository;
+use App\Services\API\LOL\Model\Config\Division;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InitQueue extends Command
+class InitDivision extends Command
 {
     private ManagerRegistry $doctrine;
-    private QueueRepository $queueRepository;
+    private DivisionRepository $divisionRepository;
 
     /**
      * @var string|null
      */
-    protected static $defaultName = "init:queue";
+    protected static $defaultName = "init:division";
     protected function configure(): void
     {
         $this
-            ->setHelp("Initie l'entité Queue");
+            ->setHelp("Initie l'entité Division");
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -33,15 +33,15 @@ class InitQueue extends Command
         $compteurCreate = [];
         $compteurExiste = [];
 
-        foreach (Queue::ALL_QEUEUES as $queue) {
-            if ($this->queueRepository->findOneBy(["name" => $queue]) === null) {
-                $this->compteur($compteurCreate, $queue);
-                $queueEntity = (new EntityQueue())
-                    ->setName($queue)
+        foreach (Division::ALL_DIVISION as $division) {
+            if ($this->divisionRepository->findOneBy(["name" => $division]) === null) {
+                $this->compteur($compteurCreate, $division);
+                $divisionEntity = (new EntityDivision())
+                    ->setName($division)
                 ;
-                $entityManager->persist($queueEntity);
+                $entityManager->persist($divisionEntity);
             }
-            $this->compteur($compteurExiste, $queue);
+            $this->compteur($compteurExiste, $division);
         }
         $entityManager->flush();
 
@@ -60,10 +60,10 @@ class InitQueue extends Command
 
     public function __construct(
         ManagerRegistry $doctrine,
-        QueueRepository $queueRepository
+        DivisionRepository $divisionRepository
     ) {
         $this->doctrine = $doctrine;
-        $this->queueRepository = $queueRepository;
+        $this->divisionRepository = $divisionRepository;
         parent::__construct();
     }
 }

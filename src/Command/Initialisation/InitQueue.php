@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Command;
+namespace App\Command\Initialisation;
 
-use App\Entity\Tier as EntityTier;
-use App\Repository\TierRepository;
-use App\Services\API\LOL\Model\Config\Tier;
+use App\Entity\Queue as EntityQueue;
+use App\Repository\QueueRepository;
+use App\Services\API\LOL\Model\Config\Queue;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InitTier extends Command
+class InitQueue extends Command
 {
     private ManagerRegistry $doctrine;
-    private TierRepository $tierRepository;
+    private QueueRepository $queueRepository;
 
     /**
      * @var string|null
      */
-    protected static $defaultName = "init:tier";
+    protected static $defaultName = "init:queue";
     protected function configure(): void
     {
         $this
-            ->setHelp("Initie l'entité Tiers");
+            ->setHelp("Initie l'entité Queue");
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -33,16 +33,15 @@ class InitTier extends Command
         $compteurCreate = [];
         $compteurExiste = [];
 
-        foreach (Tier::ALL_TIERS as $tier) {
-            if ($this->tierRepository->findOneBy(["name" => $tier]) === null) {
-                $this->compteur($compteurCreate, $tier);
-                $tierEntity = (new EntityTier())
-                    ->setName($tier)
+        foreach (Queue::ALL_QEUEUES as $queue) {
+            if ($this->queueRepository->findOneBy(["name" => $queue]) === null) {
+                $this->compteur($compteurCreate, $queue);
+                $queueEntity = (new EntityQueue())
+                    ->setName($queue)
                 ;
-                $entityManager->persist($tierEntity);
-                continue;
+                $entityManager->persist($queueEntity);
             }
-            $this->compteur($compteurExiste, $tier);
+            $this->compteur($compteurExiste, $queue);
         }
         $entityManager->flush();
 
@@ -61,10 +60,10 @@ class InitTier extends Command
 
     public function __construct(
         ManagerRegistry $doctrine,
-        TierRepository $tierRepository
+        QueueRepository $queueRepository
     ) {
         $this->doctrine = $doctrine;
-        $this->tierRepository = $tierRepository;
+        $this->queueRepository = $queueRepository;
         parent::__construct();
     }
 }

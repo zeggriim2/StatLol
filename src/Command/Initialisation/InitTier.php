@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Command;
+namespace App\Command\Initialisation;
 
-use App\Entity\Division as EntityDivision;
-use App\Repository\DivisionRepository;
-use App\Services\API\LOL\Model\Config\Division;
+use App\Entity\Tier as EntityTier;
+use App\Repository\TierRepository;
+use App\Services\API\LOL\Model\Config\Tier;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InitDivision extends Command
+class InitTier extends Command
 {
     private ManagerRegistry $doctrine;
-    private DivisionRepository $divisionRepository;
+    private TierRepository $tierRepository;
 
     /**
      * @var string|null
      */
-    protected static $defaultName = "init:division";
+    protected static $defaultName = "init:tier";
     protected function configure(): void
     {
         $this
-            ->setHelp("Initie l'entité Division");
+            ->setHelp("Initie l'entité Tiers");
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -33,15 +33,16 @@ class InitDivision extends Command
         $compteurCreate = [];
         $compteurExiste = [];
 
-        foreach (Division::ALL_DIVISION as $division) {
-            if ($this->divisionRepository->findOneBy(["name" => $division]) === null) {
-                $this->compteur($compteurCreate, $division);
-                $divisionEntity = (new EntityDivision())
-                    ->setName($division)
+        foreach (Tier::ALL_TIERS as $tier) {
+            if ($this->tierRepository->findOneBy(["name" => $tier]) === null) {
+                $this->compteur($compteurCreate, $tier);
+                $tierEntity = (new EntityTier())
+                    ->setName($tier)
                 ;
-                $entityManager->persist($divisionEntity);
+                $entityManager->persist($tierEntity);
+                continue;
             }
-            $this->compteur($compteurExiste, $division);
+            $this->compteur($compteurExiste, $tier);
         }
         $entityManager->flush();
 
@@ -60,10 +61,10 @@ class InitDivision extends Command
 
     public function __construct(
         ManagerRegistry $doctrine,
-        DivisionRepository $divisionRepository
+        TierRepository $tierRepository
     ) {
         $this->doctrine = $doctrine;
-        $this->divisionRepository = $divisionRepository;
+        $this->tierRepository = $tierRepository;
         parent::__construct();
     }
 }

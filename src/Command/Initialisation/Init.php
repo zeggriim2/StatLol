@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Command\Initialisation;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
@@ -39,7 +39,7 @@ class Init extends Command
             $commands[] = "division";
         } else {
             foreach ($types as $type) {
-                $namespace = "App\Command\Init" . trim(ucfirst($type));
+                $namespace = "App\Command\Initialisation\Init" . trim(ucfirst($type));
                 if (class_exists($namespace)) {
                     $commands[] = $type;
                 }
