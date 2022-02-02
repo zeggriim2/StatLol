@@ -24,7 +24,7 @@ class Init extends Command
     {
         $this
             ->addArgument("types", InputArgument::IS_ARRAY, "", ["all"])
-            ->setHelp("Initie l'entité Queue");
+            ->setHelp("Initie les entité");
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -32,23 +32,33 @@ class Init extends Command
         $io = new SymfonyStyle($input, $output);
         $types = $input->getArgument("types");
 
-
-        if ($types[0] !== "all") {
-            $type[] = "queue";
-            $type[] = "tier";
-            $type[] = "division";
+        $commands = [];
+        if ($types[0] === "all") {
+            $commands[] = "queue";
+            $commands[] = "tier";
+            $commands[] = "division";
         } else {
             foreach ($types as $type) {
                 $namespace = "App\Command\Init" . trim(ucfirst($type));
                 if (class_exists($namespace)) {
-                    $this->executeCommand($type);
+                    $commands[] = $type;
                 }
             }
         }
+
+        // On parcour toutes les commandes à initialisé
+        if (count($commands)) {
+            foreach ($commands as $command) {
+                if ($this->executeCommand($command) === 0) {
+                    $io->success("Commande Init" . ucFirst($command));
+                }
+            }
+        }
+
         return Command::SUCCESS;
     }
 
-    private function executeCommand(string $type): void
+    private function executeCommand(string $type): int
     {
         $application = new Application($this->kernel);
         $application->setAutoExit(false);
@@ -58,7 +68,7 @@ class Init extends Command
         ]);
 
         $outputAppli = new BufferedOutput();
-        $application->run($inputAppli, $outputAppli);
+        return $application->run($inputAppli, $outputAppli);
     }
 
 
