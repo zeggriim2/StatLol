@@ -1,3 +1,8 @@
+Prérequis
+-------------
+ - PHP >= 7.4
+ - Symfony 5.4.*
+
 Commande Initialisation (Division/Queue/Tier)
 =======
 
