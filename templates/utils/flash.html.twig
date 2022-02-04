@@ -1,0 +1,9 @@
+{% if idFlash is defined %}
+    {% for message in app.flashes(idFlash) %}
+        <div class="row justify-content-center">
+            <div id="alert_message" class="col-6 alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
