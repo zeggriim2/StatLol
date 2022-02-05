@@ -20,7 +20,7 @@ class QueueCrudController extends AbstractCrudController
         return [
             IdField::new('id')->setFormTypeOption("disabled", "disabled"),
             TextField::new('name'),
-            DateTimeField::new('createdAt'),
+            DateTimeField::new('createdAt')->setFormTypeOption("disabled", "disabled"),
         ];
     }
 }

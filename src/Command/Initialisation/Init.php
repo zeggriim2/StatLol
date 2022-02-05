@@ -24,6 +24,7 @@ class Init extends Command
     {
         $this
             ->addArgument("types", InputArgument::IS_ARRAY, "", ["all"])
+            ->setDescription("Initialise tout les entitées principales.")
             ->setHelp("Initie les entité");
     }
 
