@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Queue;
 use App\Entity\League;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Summoner;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method League|null find($id, $lockMode = null, $lockVersion = null)

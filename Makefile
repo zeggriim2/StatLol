@@ -8,9 +8,8 @@ install:
 	composer install
 	make prepare env=$(env)
 
-composer-install:
-	composer install
-
+init:
+	php bin/console init:init
 
 database-dev:
 	php bin/console doctrine:database:drop --if-exists --force --env=dev
