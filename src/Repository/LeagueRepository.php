@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Queue;
 use App\Entity\League;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Summoner;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method League|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,27 @@ class LeagueRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, League::class);
+    }
+
+    public function findLastTimeInterval(
+        Queue $queue,
+        Summoner $summoner,
+        string $modifier = "-5 minutes"
+    ): ?League
+    {
+        $dateModifier = (new \DateTimeImmutable())->modify($modifier);
+
+        return $this->createQueryBuilder("l")
+            ->andWhere("l.summoner = :summoner")
+            ->andWhere("l.queue =  :queue")
+            ->andWhere("l.createdAt >= :date")
+            ->setParameter("queue", $queue)
+            ->setParameter("date", $dateModifier)
+            ->setParameter("summoner", $summoner)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 
     // /**
