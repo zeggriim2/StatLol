@@ -4,7 +4,6 @@ namespace App\Services\API\LOL\Model\Config;
 
 class Tier
 {
-    
     public const TIER_CHALLENGER    = "CHALLENGER";
     public const TIER_GRANDMASTER   = "GRANDMASTER";
     public const TIER_MASTER        = "MASTER";

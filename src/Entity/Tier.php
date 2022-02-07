@@ -32,8 +32,9 @@ class Tier
 
     /**
      * @ORM\OneToMany(targetEntity=League::class, mappedBy="tier")
+     * @var Collection<int, League>
      */
-    private $leagues;
+    private Collection $leagues;
 
     public function __construct()
     {

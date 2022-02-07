@@ -32,8 +32,9 @@ class Division
 
     /**
      * @ORM\OneToMany(targetEntity=League::class, mappedBy="division")
+     * @var Collection<int, League>
      */
-    private $leagues;
+    private Collection $leagues;
 
     public function __construct()
     {

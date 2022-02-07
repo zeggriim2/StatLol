@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\LeagueRepository;
+use App\Entity\Queue;
+use App\Entity\Summoner;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\LeagueRepository;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass=LeagueRepository::class)
@@ -26,72 +29,72 @@ class League
     /**
      * @ORM\Column(type="integer")
      */
-    private $leaguePoints;
+    private int $leaguePoints;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $wins;
+    private int $wins;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $losses;
+    private int $losses;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $veteran;
+    private bool $veteran;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $inactive;
+    private bool $inactive;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $freshBlood;
+    private bool $freshBlood;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $hotStreak;
+    private bool $hotStreak;
 
     /**
      * @ORM\ManyToOne(targetEntity=Summoner::class, inversedBy="leagues")
      */
-    private $summoner;
+    private ?Summoner $summoner;
 
     /**
      * @ORM\ManyToOne(targetEntity=Queue::class, inversedBy="leagues")
      */
-    private $queue;
+    private ?Queue $queue;
 
     /**
      * @ORM\ManyToOne(targetEntity=Tier::class, inversedBy="leagues")
      */
-    private $tier;
+    private ?Tier $tier;
 
     /**
      * @ORM\ManyToOne(targetEntity=Division::class, inversedBy="leagues")
      */
-    private $division;
+    private ?Division $division;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $createdAt;
+    private ?\DateTimeImmutable $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $updateAt;
+    private \DateTimeImmutable $updateAt;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $active = true;
+    private bool $active = true;
 
     public function getId(): ?int
     {

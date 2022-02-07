@@ -28,14 +28,13 @@ class SummonerController extends AbstractController
     private SummonerApi $summonerApi;
     private LeagueApi $leagueApi;
     private ObjectManager $em;
-    
+
 
     public function __construct(
         ManagerRegistry $doctrine,
         SummonerApi $summonerApi,
         LeagueApi $leagueApi
-    )
-    {
+    ) {
         $this->doctrine = $doctrine;
         $this->summonerApi = $summonerApi;
         $this->leagueApi = $leagueApi;
@@ -48,8 +47,7 @@ class SummonerController extends AbstractController
      */
     public function index(
         Request $request
-    ): Response
-    {
+    ): Response {
 
         $form = $this->createForm(SummonerType::class);
 
@@ -60,17 +58,18 @@ class SummonerController extends AbstractController
 
             $summonerApi = $this->checkSummonerApi($nameSummoner);
 
-            if($summonerApi !== null) {
+            if ($summonerApi !== null) {
                 // On intègre le Summoner en BDD
                 $this->addSummonerInBdd($summonerApi);
-                
-                $summoner = $this->doctrine->getRepository(Summoner::class)->findOneBy(['summonerId' => $summonerApi->getId()]);
-                
+
+                $summoner = $this->doctrine->getRepository(Summoner::class)
+                                ->findOneBy(['summonerId' => $summonerApi->getId()]);
+
                 $this->addLeagueInBdd($summoner);
 
-                return $this->redirectToRoute("summoner_name",["name" => $nameSummoner]);
+                return $this->redirectToRoute("summoner_name", ["name" => $nameSummoner]);
             }
-            $this->addFlash("summonerError","Nom d'invocateur non trouvé !!!");
+            $this->addFlash("summonerError", "Nom d'invocateur non trouvé !!!");
         }
 
         return $this->render('summoner/index.html.twig', [
@@ -85,8 +84,7 @@ class SummonerController extends AbstractController
      */
     public function name(
         Summoner $summoner
-    )
-    {
+    ): Response {
         return $this->render('summoner/name.html.twig', [
             'summoner' => $summoner
         ]);
@@ -99,12 +97,10 @@ class SummonerController extends AbstractController
     }
 
 
-    private function addLeagueInBdd(Summoner $summoner = null)
+    private function addLeagueInBdd(Summoner $summoner = null): void
     {
         // On récupère les league d'un summoner
         $leaguesApi = $this->leagueApi->leagueBySummonerId($summoner->getSummonerId());
-        
-        if($leaguesApi === null) return null;
 
         // On filtre que les leagues correspondant à League of legends (on exclus TFT par Exemple)
         $this->filtreLeagueQueue($leaguesApi);
@@ -113,7 +109,7 @@ class SummonerController extends AbstractController
         $leagueRepo = $this->doctrine->getRepository(League::class);
 
         /** @var EntityLeagueApi $leagueApi */
-        foreach($leaguesApi as $leagueApi) {
+        foreach ($leaguesApi as $leagueApi) {
 
             /** @var Queue $queue */
             $queue = $this->doctrine->getRepository(Queue::class)->findOneBy(['name' => $leagueApi->getQueueType()]);
@@ -122,17 +118,26 @@ class SummonerController extends AbstractController
             /** @var Division $division */
             $division = $this->doctrine->getRepository(Division::class)->findOneBy(['name' => $leagueApi->getRank()]);
 
-            $league = $leagueRepo->findOneBy(['queue' => $queue, "summoner" => $summoner, "active" => true], ["createdAt" => "DESC"]);
-            
-            if($league !== null) {
+            $league = $leagueRepo->findOneBy(
+                [
+                    'queue' => $queue,
+                     "summoner" => $summoner,
+                      "active" => true
+                ],
+                [
+                    "createdAt" => "DESC"
+                ]
+            );
+
+            if ($league !== null) {
                 $dateLimit = (new \DateTimeImmutable())->modify("-2 minutes");
-                if($league->getCreatedAt() >= $dateLimit) {
+                if ($league->getCreatedAt() >= $dateLimit) {
                     continue;
-                }else{
+                } else {
                     $this->desactiveLeague($league);
                 }
             }
-            
+
             $league = (new League())
                 ->setQueue($queue)
                 ->setTier($tier)
@@ -155,26 +160,30 @@ class SummonerController extends AbstractController
     }
 
 
-    private function filtreLeagueQueue(array &$leaguesApi)
+    /**
+     * @param array<array-key,EntityLeagueApi> $leaguesApi
+     */
+    private function filtreLeagueQueue(array &$leaguesApi): void
     {
-        foreach($leaguesApi as $key => $league) {
-            if(!in_array($league->getQueueType(), QueueConfig::ALL_QEUEUES)){
+        foreach ($leaguesApi as $key => $league) {
+            if (!in_array($league->getQueueType(), QueueConfig::ALL_QEUEUES)) {
                 unset($leaguesApi[$key]);
             }
         }
     }
 
-    private function desactiveLeague(league $league) {
-        $league->setActive(false); 
+    private function desactiveLeague(league $league): void
+    {
+        $league->setActive(false);
         $this->em->persist($league);
         $this->em->flush();
     }
 
-    private function addSummonerInBdd(EntitySummonerApi $summonerApi)
+    private function addSummonerInBdd(EntitySummonerApi $summonerApi): void
     {
         $summoner = $this->doctrine->getRepository(Summoner::class)->findOneBy(['summonerId' => $summonerApi->getId()]);
 
-        if($summoner === null) {
+        if ($summoner === null) {
             $summoner = new Summoner();
         }
 
@@ -186,7 +195,7 @@ class SummonerController extends AbstractController
             ->setPuuid($summonerApi->getPuuid())
         ;
         $em = $this->doctrine->getManager();
-        
+
         $em->persist($summoner);
         $em->flush();
     }
