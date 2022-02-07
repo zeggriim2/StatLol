@@ -25,9 +25,8 @@ class Version
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * @var \DateTimeImmutable
      */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     public function getId(): ?int
     {

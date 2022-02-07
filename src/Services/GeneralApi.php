@@ -11,19 +11,22 @@ class GeneralApi
     private BaseApi $baseApi;
 
     public function __construct(
-        BaseApi $baseApi,
+        BaseApi $baseApi
     ) {
         $this->baseApi = $baseApi;
     }
 
     /**
-     * @return array<string,int|string>|null
+     * @return array<string>|null
      */
     public function versions(): ?array
     {
-        return $this->baseApi->callApi(
+        /** @var array<string> $versions */
+        $versions = $this->baseApi->callApi(
             self::URL_VERSIONS,
             Request::METHOD_GET
         );
+
+        return $versions;
     }
 }

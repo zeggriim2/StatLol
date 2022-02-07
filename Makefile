@@ -37,8 +37,6 @@ fixtures-dev:
 	php bin/console doctrine:fixtures:load -n --env=dev
 
 
-
-
 .PHONY: vendor
 analyze:
 	composer valid
