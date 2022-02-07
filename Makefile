@@ -1,4 +1,4 @@
-.PHONY: tests install fixtures database prepare tests phpstan php-cs-fixer composer-valid doctrine fix analyse
+.PHONY: composer-install tests install fixtures database prepare tests phpstan php-cs-fixer composer-valid doctrine fix analyse
 
 install:
 	cp .env.dist .env.$(env).local
@@ -10,7 +10,6 @@ install:
 
 init:
 	php bin/console init:init
-
 
 database-dev:
 	php bin/console doctrine:database:drop --if-exists --force --env=dev
@@ -36,6 +35,9 @@ fixtures-test:
 
 fixtures-dev:
 	php bin/console doctrine:fixtures:load -n --env=dev
+
+
+
 
 .PHONY: vendor
 analyze:
