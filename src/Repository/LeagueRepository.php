@@ -21,27 +21,6 @@ class LeagueRepository extends ServiceEntityRepository
         parent::__construct($registry, League::class);
     }
 
-    public function findLastTimeInterval(
-        Queue $queue,
-        Summoner $summoner,
-        string $modifier = "-5 minutes"
-    ): ?League
-    {
-        $dateModifier = (new \DateTimeImmutable())->modify($modifier);
-
-        return $this->createQueryBuilder("l")
-            ->andWhere("l.summoner = :summoner")
-            ->andWhere("l.queue =  :queue")
-            ->andWhere("l.createdAt >= :date")
-            ->setParameter("queue", $queue)
-            ->setParameter("date", $dateModifier)
-            ->setParameter("summoner", $summoner)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-
     // /**
     //  * @return League[] Returns an array of League objects
     //  */
