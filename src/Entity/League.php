@@ -83,13 +83,15 @@ class League
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @var \DateTimeImmutable|null
      */
-    private ?\DateTimeImmutable $createdAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @var \DateTimeImmutable
      */
-    private \DateTimeImmutable $updateAt;
+    private $updateAt;
 
     /**
      * @ORM\Column(type="boolean")
