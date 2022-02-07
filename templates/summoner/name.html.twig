@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ summoner.name }}{% endblock %}
+
+
+{% block body %}
+
+
+<div class="container mt-3">
+    {# <h1></h1> #}
+    <h1 class="display-1">Bonjour {{ summoner.name }}</h1>
+
+    <div class="row">
+        <div class="col-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Queue</th>
+                        <th scope="col">Tiers</th>
+                        <th scope="col">Division</th>
+                        <th scope="col">League Points</th>
+                        <th scope="col">Win</th>
+                        <th scope="col">Losse</th>
+                        <th scope="col">Veteran</th>
+                        <th scope="col">Inactive</th>
+                        <th scope="col">Fresh Bood</th>
+                        <th scope="col">Hot Streak</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for league in summoner.leagues %}
+                    <tr>
+                        <th scope="row">{{ league.id }}</th>
+                        <td>{{ league.queue.name }}</td>
+                        <td>{{ league.tier.name }}</td>
+                        <td>{{ league.division.name }}</td>
+                        <td>{{ league.leaguePoints }}</td>
+                        <td>{{ league.wins }}</td>
+                        <td>{{ league.losses }}</td>
+                        <td>{{ league.veteranOuiNon }}</td>
+                        <td>{{ league.inactiveOuiNon }}</td>
+                        <td>{{ league.freshBloodOuiNon }}</td>
+                        <td>{{ league.hotStreakOuiNon }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+    
+    </div>
+    
+</div>
+{% endblock %}

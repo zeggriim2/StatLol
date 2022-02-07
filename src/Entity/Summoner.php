@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\SummonerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=SummonerRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields="name", message="Name is already taken.")
  */
 class Summoner
 {
@@ -35,7 +39,7 @@ class Summoner
     private string $puuid;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=100, unique=true)
      */
     private string $name;
 
@@ -53,6 +57,16 @@ class Summoner
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private ?\DateTimeImmutable $updatedAt = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity=League::class, mappedBy="summoner")
+     */
+    private $leagues;
+
+    public function __construct()
+    {
+        $this->leagues = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -153,5 +167,35 @@ class Summoner
         if ($this->getCreatedAt() === null) {
             $this->setCreatedAt(new \DateTimeImmutable('now'));
         }
+    }
+
+    /**
+     * @return Collection|League[]
+     */
+    public function getLeagues(): Collection
+    {
+        return $this->leagues;
+    }
+
+    public function addLeague(League $league): self
+    {
+        if (!$this->leagues->contains($league)) {
+            $this->leagues[] = $league;
+            $league->setSummoner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLeague(League $league): self
+    {
+        if ($this->leagues->removeElement($league)) {
+            // set the owning side to null (unless already changed)
+            if ($league->getSummoner() === $this) {
+                $league->setSummoner(null);
+            }
+        }
+
+        return $this;
     }
 }
