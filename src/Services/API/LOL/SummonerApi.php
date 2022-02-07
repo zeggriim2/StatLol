@@ -8,7 +8,6 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class SummonerApi
 {
-//    private const URL_RACINE = "https://{platform}.api.riotgames.com/lol/";
     private const URL_NAME =
         BaseApi::URL_RACINE_PLATFORM . "summoner/v4/summoners/by-name/{name}";
     private const URL_ACCOUNTID =
