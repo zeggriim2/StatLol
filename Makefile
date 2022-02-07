@@ -5,8 +5,12 @@ install:
 	sed -i -e 's/DATABASE_USER/$(db_user)/' .env.$(env).local
 	sed -i -e 's/DATABASE_PASSWORD/$(db_password)/' .env.$(env).local
 	sed -i -e 's/ENV/$(env)/' .env.$(env).local
-	composer install
+	composer-install
 	make prepare env=$(env)
+
+composer-install:
+	composer install
+
 
 database-dev:
 	php bin/console doctrine:database:drop --if-exists --force --env=dev
@@ -32,6 +36,9 @@ fixtures-test:
 
 fixtures-dev:
 	php bin/console doctrine:fixtures:load -n --env=dev
+
+
+
 
 .PHONY: vendor
 analyze:
