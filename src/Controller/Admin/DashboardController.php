@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Division;
 use App\Entity\Queue;
 use App\Entity\Tier;
+use App\Entity\Version;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -49,6 +50,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Tier', 'fas fa-list', Tier::class),
             MenuItem::linkToCrud('Division', 'fas fa-list', Division::class),
             MenuItem::linkToCrud('Queue', 'fas fa-list', Queue::class),
+            MenuItem::linkToCrud('Version', 'fas fa-list', Version::class),
         ]);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
