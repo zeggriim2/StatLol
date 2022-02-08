@@ -3,11 +3,12 @@
 namespace App\Tests;
 
 use App\Services\API\LOL\GeneralApi;
+use App\Services\API\LOL\Model\DataDragon\Map;
+use App\Services\API\LOL\Model\DataDragon\Queue;
+use App\Services\API\LOL\Model\DataDragon\Season;
+use App\Services\API\LOL\Model\DataDragon\Champion;
 use App\Services\API\LOL\Model\DataDragon\GameMode;
 use App\Services\API\LOL\Model\DataDragon\GameType;
-use App\Services\API\LOL\Model\DataDragon\Map;
-use App\Services\API\LOL\Model\DataDragon\Season;
-use App\Services\API\LOL\Model\DataDragon\Queue;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class GeneralApiTest extends KernelTestCase
@@ -78,6 +79,17 @@ class GeneralApiTest extends KernelTestCase
 
         foreach ($gameTypes as $gameType) {
             $this->assertInstanceOf(GameType::class, $gameType);
+        }
+    }
+
+    public function testChampions()
+    {
+        $champions = $this->generalApi->champions("12.3.1", "fr_FR");
+
+        $this->assertIsArray($champions);
+
+        foreach ($champions as $champion) {
+            $this->assertInstanceOf(Champion::class, $champion);
         }
     }
 }
