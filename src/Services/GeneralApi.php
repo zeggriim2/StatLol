@@ -24,7 +24,7 @@ class GeneralApi
 
     private const URL_CHAMPIONS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion.json";
     private const URL_ITEMS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/item.json";
-    
+
 
     private BaseApi $baseApi;
     private DenormalizerInterface $denormalizer;
@@ -195,21 +195,6 @@ class GeneralApi
         /** @var array<array-key,Champion>  $championsDenormalize*/
         $championsDenormalize = $this->denormalizeArray($champions['data'], Champion::class);
         return $championsDenormalize;
-    }
-
-    public function items(string $version, string $lang)
-    {
-        if (strlen($version) <= 0 || strlen($lang) <= 0) {
-            return null;
-        }
-
-        $url = $this->baseApi->constructUrl(
-            self::URL_ITEMS,
-            [
-                "version" => $version,
-                "lang" => $lang
-            ]
-        );
     }
 
     /**
