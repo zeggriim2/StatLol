@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\API\LOL;
+namespace App\Services\API\LOL\DataDragon;
 
-use App\Services\API\LOL\Model\DataDragon\Champion;
+use App\Services\API\LOL\BaseApi;
 use App\Services\API\LOL\Model\DataDragon\GameMode;
 use App\Services\API\LOL\Model\DataDragon\GameType;
 use App\Services\API\LOL\Model\DataDragon\Map;
@@ -21,8 +21,6 @@ class GeneralApi
     private const URL_GAMETYPES = self::URL_BASE_STATIC . "gameTypes.json";
     private const URL_VERSIONS = "https://ddragon.leagueoflegends.com/api/versions.json";
     private const URL_LANGUAGES = "https://ddragon.leagueoflegends.com/cdn/languages.json";
-
-    private const URL_CHAMPIONS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion.json";
 
 
     private BaseApi $baseApi;
@@ -165,41 +163,9 @@ class GeneralApi
     }
 
     /**
-     * @return array<array-key,Champion>|null
-     */
-    public function champions(string $version, string $lang): ?array
-    {
-        if (strlen($version) <= 0 || strlen($lang) <= 0) {
-            return null;
-        }
-
-        $url = $this->baseApi->constructUrl(
-            self::URL_CHAMPIONS,
-            [
-                "version" => $version,
-                "lang" => $lang
-            ]
-        );
-
-        /** @var array<array-key,array<array<string, int|string>>>|null $champions */
-        $champions = $this->baseApi->callApi(
-            $url,
-            Request::METHOD_GET,
-        );
-
-        if (is_null($champions)) {
-            return null;
-        }
-
-        /** @var array<array-key,Champion>|null $championsDenormalize */
-        $championsDenormalize = $this->denormalizeArray($champions['data'], Champion::class);
-        return $championsDenormalize;
-    }
-
-    /**
      * @param array<array-key,array<string,int|string>> $datas
      * @param string $type
-     * @return array<array-key,Season|GameType|GameMode|Map|Queue|Champion>
+     * @return array<array-key,Season|GameType|GameMode|Map|Queue>
      */
     private function denormalizeArray(array $datas, string $type)
     {
