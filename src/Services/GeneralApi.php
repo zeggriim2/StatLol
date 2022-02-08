@@ -2,11 +2,11 @@
 
 namespace App\Services\API\LOL;
 
-use App\Services\API\LOL\Model\GameMode;
-use App\Services\API\LOL\Model\GameType;
-use App\Services\API\LOL\Model\Map;
-use App\Services\API\LOL\Model\Season;
-use App\Services\API\LOL\Model\Queue;
+use App\Services\API\LOL\Model\DataDragon\GameMode;
+use App\Services\API\LOL\Model\DataDragon\GameType;
+use App\Services\API\LOL\Model\DataDragon\Map;
+use App\Services\API\LOL\Model\DataDragon\Season;
+use App\Services\API\LOL\Model\DataDragon\Queue;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 

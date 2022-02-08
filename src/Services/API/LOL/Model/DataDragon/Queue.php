@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\API\LOL\Model;
+namespace App\Services\API\LOL\Model\DataDragon;
 
 class Queue
 {
