@@ -23,7 +23,6 @@ class GeneralApi
     private const URL_LANGUAGES = "https://ddragon.leagueoflegends.com/cdn/languages.json";
 
     private const URL_CHAMPIONS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion.json";
-    private const URL_ITEMS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/item.json";
 
 
     private BaseApi $baseApi;
@@ -182,7 +181,7 @@ class GeneralApi
             ]
         );
 
-        /** @var array<array-key,array<string,int|string>>|null $champions */
+        /** @var array<array-key,array<array<string, int|string>>>|null $champions */
         $champions = $this->baseApi->callApi(
             $url,
             Request::METHOD_GET,
@@ -192,7 +191,7 @@ class GeneralApi
             return null;
         }
 
-        /** @var array<array-key,Champion>  $championsDenormalize*/
+        /** @var array<array-key,Champion>|null $championsDenormalize */
         $championsDenormalize = $this->denormalizeArray($champions['data'], Champion::class);
         return $championsDenormalize;
     }
