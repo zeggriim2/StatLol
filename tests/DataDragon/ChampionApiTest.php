@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\DataDragon;
 
+use App\Services\API\LOL\DataDragon\ChampionApi;
 use App\Services\API\LOL\Model\DataDragon\Champion;
-use App\Services\API\LOL\Model\DataDragon\ChampionApi;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ChampionApiTest extends KernelTestCase
