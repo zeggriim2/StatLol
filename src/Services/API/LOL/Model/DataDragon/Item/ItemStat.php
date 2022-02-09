@@ -4,225 +4,164 @@ namespace App\Services\API\LOL\Model\DataDragon\Item;
 
 class ItemStat
 {
-    private ?int $FlatMovementSpeedMod;
-    private ?int $FlatHPPoolMod;
-    private ?float $FlatCritChanceMod;
-    private ?int $FlatMagicDamageMod;
-    private ?int $FlatMPPoolMod;
-    private ?int $FlatArmorMod;
-    private ?int $FlatSpellBlockMod;
-    private ?int $FlatPhysicalDamageMod;
-    private ?float $PercentAttackSpeedMod;
-    private ?float $PercentLifeStealMod;
-    private ?float $FlatHPRegenMod;
-    private ?float $PercentMovementSpeedMod;
-
+    private ?float $percentAttackSpeedMod;
+    private ?int $flatHPPoolMod;
+    private ?float $flatCritChanceMod;
+    private ?int $flatMagicDamageMod;
+    private ?int $flatMPPoolMod;
+    private ?int $flatArmorMod;
+    private ?int $flatSpellBlockMod;
+    private ?int $flatPhysicalDamageMod;
+    private ?int $flatMovementSpeedMod;
+    private ?float $percentLifeStealMod;
     /**
-     * @return int|null
+     * @var float|int|null
      */
-    public function getFlatMovementSpeedMod(): ?int
-    {
-        return $this->FlatMovementSpeedMod;
-    }
+    private $flatHPRegenMod;
+    private ?float $percentMovementSpeedMod;
 
-    /**
-     * @param int|null $FlatMovementSpeedMod
-     * @return ItemStat
-     */
-    public function setFlatMovementSpeedMod(?int $FlatMovementSpeedMod): ItemStat
-    {
-        $this->FlatMovementSpeedMod = $FlatMovementSpeedMod;
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getFlatHPPoolMod(): ?int
-    {
-        return $this->FlatHPPoolMod;
-    }
-
-    /**
-     * @param int|null $FlatHPPoolMod
-     * @return ItemStat
-     */
-    public function setFlatHPPoolMod(?int $FlatHPPoolMod): ItemStat
-    {
-        $this->FlatHPPoolMod = $FlatHPPoolMod;
-        return $this;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getFlatCritChanceMod(): ?float
-    {
-        return $this->FlatCritChanceMod;
-    }
-
-    /**
-     * @param float|null $FlatCritChanceMod
-     * @return ItemStat
-     */
-    public function setFlatCritChanceMod(?float $FlatCritChanceMod): ItemStat
-    {
-        $this->FlatCritChanceMod = $FlatCritChanceMod;
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getFlatMagicDamageMod(): ?int
-    {
-        return $this->FlatMagicDamageMod;
-    }
-
-    /**
-     * @param int|null $FlatMagicDamageMod
-     * @return ItemStat
-     */
-    public function setFlatMagicDamageMod(?int $FlatMagicDamageMod): ItemStat
-    {
-        $this->FlatMagicDamageMod = $FlatMagicDamageMod;
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getFlatMPPoolMod(): ?int
-    {
-        return $this->FlatMPPoolMod;
-    }
-
-    /**
-     * @param int|null $FlatMPPoolMod
-     * @return ItemStat
-     */
-    public function setFlatMPPoolMod(?int $FlatMPPoolMod): ItemStat
-    {
-        $this->FlatMPPoolMod = $FlatMPPoolMod;
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getFlatArmorMod(): ?int
-    {
-        return $this->FlatArmorMod;
-    }
-
-    /**
-     * @param int|null $FlatArmorMod
-     * @return ItemStat
-     */
-    public function setFlatArmorMod(?int $FlatArmorMod): ItemStat
-    {
-        $this->FlatArmorMod = $FlatArmorMod;
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getFlatSpellBlockMod(): ?int
-    {
-        return $this->FlatSpellBlockMod;
-    }
-
-    /**
-     * @param int|null $FlatSpellBlockMod
-     * @return ItemStat
-     */
-    public function setFlatSpellBlockMod(?int $FlatSpellBlockMod): ItemStat
-    {
-        $this->FlatSpellBlockMod = $FlatSpellBlockMod;
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getFlatPhysicalDamageMod(): ?int
-    {
-        return $this->FlatPhysicalDamageMod;
-    }
-
-    /**
-     * @param int|null $FlatPhysicalDamageMod
-     * @return ItemStat
-     */
-    public function setFlatPhysicalDamageMod(?int $FlatPhysicalDamageMod): ItemStat
-    {
-        $this->FlatPhysicalDamageMod = $FlatPhysicalDamageMod;
-        return $this;
-    }
-
-    /**
-     * @return float|null
-     */
     public function getPercentAttackSpeedMod(): ?float
     {
-        return $this->PercentAttackSpeedMod;
+        return $this->percentAttackSpeedMod;
     }
 
-    /**
-     * @param float|null $PercentAttackSpeedMod
-     * @return ItemStat
-     */
-    public function setPercentAttackSpeedMod(?float $PercentAttackSpeedMod): ItemStat
+    public function setPercentAttackSpeedMod(?float $percentAttackSpeedMod): ItemStat
     {
-        $this->PercentAttackSpeedMod = $PercentAttackSpeedMod;
+        $this->percentAttackSpeedMod = $percentAttackSpeedMod;
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
+    public function getFlatHPPoolMod(): ?int
+    {
+        return $this->flatHPPoolMod;
+    }
+
+    public function setFlatHPPoolMod(?int $flatHPPoolMod): ItemStat
+    {
+        $this->flatHPPoolMod = $flatHPPoolMod;
+        return $this;
+    }
+
+    public function getFlatCritChanceMod(): ?float
+    {
+        return $this->flatCritChanceMod;
+    }
+
+    public function setFlatCritChanceMod(?float $flatCritChanceMod): ItemStat
+    {
+        $this->flatCritChanceMod = $flatCritChanceMod;
+        return $this;
+    }
+
+    public function getFlatMagicDamageMod(): ?int
+    {
+        return $this->flatMagicDamageMod;
+    }
+
+    public function setFlatMagicDamageMod(?int $flatMagicDamageMod): ItemStat
+    {
+        $this->flatMagicDamageMod = $flatMagicDamageMod;
+        return $this;
+    }
+
+    public function getFlatMPPoolMod(): ?int
+    {
+        return $this->flatMPPoolMod;
+    }
+
+    public function setFlatMPPoolMod(?int $flatMPPoolMod): ItemStat
+    {
+        $this->flatMPPoolMod = $flatMPPoolMod;
+        return $this;
+    }
+
+    public function getFlatArmorMod(): ?int
+    {
+        return $this->flatArmorMod;
+    }
+
+    public function setFlatArmorMod(?int $flatArmorMod): ItemStat
+    {
+        $this->flatArmorMod = $flatArmorMod;
+        return $this;
+    }
+
+    public function getFlatSpellBlockMod(): ?int
+    {
+        return $this->flatSpellBlockMod;
+    }
+
+    public function setFlatSpellBlockMod(?int $flatSpellBlockMod): ItemStat
+    {
+        $this->flatSpellBlockMod = $flatSpellBlockMod;
+        return $this;
+    }
+
+    public function getFlatPhysicalDamageMod(): ?int
+    {
+        return $this->flatPhysicalDamageMod;
+    }
+
+    public function setFlatPhysicalDamageMod(?int $flatPhysicalDamageMod): ItemStat
+    {
+        $this->flatPhysicalDamageMod = $flatPhysicalDamageMod;
+        return $this;
+    }
+
+    public function getFlatMovementSpeedMod(): ?int
+    {
+        return $this->flatMovementSpeedMod;
+    }
+
+    public function setFlatMovementSpeedMod(?int $flatMovementSpeedMod): ItemStat
+    {
+        $this->flatMovementSpeedMod = $flatMovementSpeedMod;
+        return $this;
+    }
+
     public function getPercentLifeStealMod(): ?float
     {
-        return $this->PercentLifeStealMod;
+        return $this->percentLifeStealMod;
     }
 
-    /**
-     * @param float|null $PercentLifeStealMod
-     * @return ItemStat
-     */
-    public function setPercentLifeStealMod(?float $PercentLifeStealMod): ItemStat
+    public function setPercentLifeStealMod(?float $percentLifeStealMod): ItemStat
     {
-        $this->PercentLifeStealMod = $PercentLifeStealMod;
+        $this->percentLifeStealMod = $percentLifeStealMod;
         return $this;
     }
 
     /**
-     * @return float|null
+     * @return int|float|null
      */
-    public function getFlatHPRegenMod(): ?float
+    public function getFlatHPRegenMod()
     {
-        return $this->FlatHPRegenMod;
+        return $this->flatHPRegenMod;
     }
 
     /**
-     * @param float|null $FlatHPRegenMod
+     * @param int|float|null $flatHPRegenMod
      * @return ItemStat
      */
-    public function setFlatHPRegenMod(?float $FlatHPRegenMod): ItemStat
+    public function setFlatHPRegenMod($flatHPRegenMod): ItemStat
     {
-        $this->FlatHPRegenMod = $FlatHPRegenMod;
+        $this->flatHPRegenMod = $flatHPRegenMod;
         return $this;
     }
-    
-    public function getPercentMovementSpeedMod(): ?float
+
+    /**
+     * @return int|float|null
+     */
+    public function getPercentMovementSpeedMod()
     {
-        return $this->PercentMovementSpeedMod;
+        return $this->percentMovementSpeedMod;
     }
 
-    public function setPercentMovementSpeedMod(?float $PercentMovementSpeedMod): ItemStat
+    /**
+     * @param int|float|null $percentMovementSpeedMod
+     */
+    public function setPercentMovementSpeedMod($percentMovementSpeedMod): ItemStat
     {
-        $this->PercentMovementSpeedMod = $PercentMovementSpeedMod;
+        $this->percentMovementSpeedMod = $percentMovementSpeedMod;
         return $this;
     }
 }
