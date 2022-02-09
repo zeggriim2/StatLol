@@ -26,6 +26,9 @@ services:
     App\Services\API\LOL\DataDragon\GeneralApi:
         public: true
 
+    App\Services\API\LOL\DataDragon\SummonerApi:
+        public: true
+
     App\Services\API\LOL\DataDragon\ChampionApi:
         public: true
     
