@@ -8,8 +8,14 @@ install:
 	composer install
 	make prepare env=$(env)
 
+phpcbf:
+	php vendor/bin/phpcbf
+
+clear: phpcbf
+
 init:
 	php bin/console init:init
+	php bin/console app:GetVersions
 
 database-dev:
 	php bin/console doctrine:database:drop --if-exists --force --env=dev
@@ -54,5 +60,3 @@ test: ## Test Unitaire
 phpcs:
 	php vendor/bin/phpcs
 
-phpcbf:
-	php vendor/bin/phpcbf
