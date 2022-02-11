@@ -2,16 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\VersionRepository;
+use App\Repository\PartTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=VersionRepository::class)
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass=PartTypeRepository::class)
  */
-class Version
+class PartType
 {
     /**
      * @ORM\Id
@@ -21,9 +20,9 @@ class Version
     private int $id;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=50)
      */
-    private string $name;
+    private string $label;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -31,34 +30,36 @@ class Version
     private \DateTimeImmutable $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="version")
-     * @var Collection<int, Champion>
+     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="partType")
+     * @var Collection <int, Champion>
      */
     private Collection $champions;
 
     public function __construct()
     {
         $this->champions = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable());
     }
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getLabel(): ?string
     {
-        return $this->name;
+        return $this->label;
     }
 
-    public function setName(string $name): self
+    public function setLabel(string $label): self
     {
-        $this->name = $name;
+        $this->label = $label;
 
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -68,14 +69,6 @@ class Version
         $this->createdAt = $createdAt;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PrePersist
-    */
-    public function updatedTimestamps(): void
-    {
-        $this->setCreatedAt(new \DateTimeImmutable('now'));
     }
 
     /**
@@ -90,7 +83,7 @@ class Version
     {
         if (!$this->champions->contains($champion)) {
             $this->champions[] = $champion;
-            $champion->setVersion($this);
+            $champion->setPartType($this);
         }
 
         return $this;
@@ -100,8 +93,8 @@ class Version
     {
         if ($this->champions->removeElement($champion)) {
             // set the owning side to null (unless already changed)
-            if ($champion->getVersion() === $this) {
-                $champion->setVersion(null);
+            if ($champion->getPartType() === $this) {
+                $champion->setPartType(null);
             }
         }
 
