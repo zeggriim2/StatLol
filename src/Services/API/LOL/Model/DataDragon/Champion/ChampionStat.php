@@ -294,7 +294,7 @@ class ChampionStat
     /**
      * @return int|float
      */
-    public function getAttackdamage()
+    public function getAttackDamage()
     {
         return $this->attackdamage;
     }
@@ -302,7 +302,7 @@ class ChampionStat
     /**
      * @param int|float $attackdamage
      */
-    public function setAttackdamage($attackdamage): ChampionStat
+    public function setAttackDamage($attackdamage): ChampionStat
     {
         $this->attackdamage = $attackdamage;
         return $this;
@@ -311,7 +311,7 @@ class ChampionStat
     /**
      * @return int|float
      */
-    public function getAttackdamageperlevel()
+    public function getAttackDamagePerlevel()
     {
         return $this->attackdamageperlevel;
     }
@@ -319,7 +319,7 @@ class ChampionStat
     /**
      * @param int|float $attackdamageperlevel
      */
-    public function setAttackdamageperlevel($attackdamageperlevel): ChampionStat
+    public function setAttackDamagePerlevel($attackdamageperlevel): ChampionStat
     {
         $this->attackdamageperlevel = $attackdamageperlevel;
         return $this;
@@ -328,7 +328,7 @@ class ChampionStat
     /**
      * @return int|float
      */
-    public function getAttackspeedperlevel()
+    public function getAttackSpeedPerlevel()
     {
         return $this->attackspeedperlevel;
     }
