@@ -2,12 +2,14 @@
 
 namespace App\Services\API\LOL\DataDragon;
 
+use App\Entity\Version;
 use App\Services\API\LOL\BaseApi;
 use App\Services\API\LOL\Model\DataDragon\GameMode;
 use App\Services\API\LOL\Model\DataDragon\GameType;
 use App\Services\API\LOL\Model\DataDragon\Map;
 use App\Services\API\LOL\Model\DataDragon\Season;
 use App\Services\API\LOL\Model\DataDragon\Queue;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
@@ -25,13 +27,16 @@ class GeneralApi
 
     private BaseApi $baseApi;
     private DenormalizerInterface $denormalizer;
+    private ManagerRegistry $doctrine;
 
     public function __construct(
         BaseApi $baseApi,
-        DenormalizerInterface $denormalizer
+        DenormalizerInterface $denormalizer,
+        ManagerRegistry $doctrine
     ) {
         $this->baseApi = $baseApi;
         $this->denormalizer = $denormalizer;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -46,6 +51,18 @@ class GeneralApi
         );
 
         return $versions;
+    }
+
+    public function checkVersion(string $version): ?Version
+    {
+        if (strlen($version) <= 0) {
+            return null;
+        }
+
+        $version = $this->doctrine
+                        ->getRepository(Version::class)
+                            ->findOneBy(["name" => $version]);
+        return $version;
     }
 
     /**
