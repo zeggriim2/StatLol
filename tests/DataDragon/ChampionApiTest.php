@@ -25,4 +25,11 @@ class ChampionApiTest extends KernelTestCase
             $this->assertInstanceOf(Champion::class, $champion);
         }
     }
+
+    public function testChampion()
+    {
+        $champion = $this->championApi->champion("jinx", "12.3.1", "fr_FR");
+
+        $this->assertInstanceOf(Champion::class, $champion);
+    }
 }
