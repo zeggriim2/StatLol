@@ -3,25 +3,46 @@
 namespace App\Services\API\LOL\Model\DataDragon;
 
 use App\Services\API\LOL\Model\DataDragon\Champion\ChampionInfo;
-use App\Services\API\LOL\Model\DataDragon\Champion\ChampionImage;
+use App\Services\API\LOL\Model\DataDragon\Champion\ChampionSkin;
 use App\Services\API\LOL\Model\DataDragon\Champion\ChampionStat;
+use App\Services\API\LOL\Model\DataDragon\Champion\ChampionImage;
+use App\Services\API\LOL\Model\DataDragon\Champion\ChampionPassive;
+use App\Services\API\LOL\Model\DataDragon\Champion\ChampionSpell;
 
 class Champion
 {
-    private string $version;
     private string $id;
     private string $key;
     private string $name;
     private string $title;
-    private string $blurb;
-    private ChampionInfo $info;
     private ChampionImage $image;
+    private string $blurb;
     /**
      * @var array<string>
      */
     private array $tags;
     private string $partype;
+    private ChampionInfo $info;
     private ChampionStat $stats;
+    private ?string $version;
+
+    /**
+     * @var ChampionSkin[]|null
+     */
+    private ?array $skins;
+    private ?string $lore;
+
+    /**
+     * @var array<string>|null
+     */
+    private ?array $allytips;
+
+    /**
+     * @var ChampionSpell[]|null
+     */
+    private ?array $spells;
+    private ?ChampionPassive $passive;
+
 
     public function getVersion(): string
     {
@@ -147,6 +168,79 @@ class Champion
     public function setStats(ChampionStat $stats): Champion
     {
         $this->stats = $stats;
+        return $this;
+    }
+
+    /**
+     * @return ChampionSkin[]
+     */
+    public function getSkins(): ?array
+    {
+        return $this->skins;
+    }
+
+    /**
+     * @param ChampionSkin[] $skins
+     */
+    public function setSkins(?array $skins): Champion
+    {
+        $this->skins = $skins;
+        return $this;
+    }
+
+    public function getLore(): ?string
+    {
+        return $this->lore;
+    }
+
+    public function setLore(?string $lore): Champion
+    {
+        $this->lore = $lore;
+        return $this;
+    }
+
+    /**
+     * @return array<string>|null
+     */
+    public function getAllytips(): ?array
+    {
+        return $this->allytips;
+    }
+
+    /**
+     * @param array<string>|null $allytips
+     */
+    public function setAllytips(?array $allytips): Champion
+    {
+        $this->allytips = $allytips;
+        return $this;
+    }
+
+    /**
+     * @return ChampionSpell[]|null
+     */
+    public function getSpells(): ?array
+    {
+        return $this->spells;
+    }
+
+    /**
+     * @param ChampionSpell[]|null $spells
+     */
+    public function setSpells(?array $spells): Champion
+    {
+        $this->spells = $spells;
+        return $this;
+    }
+
+    public function getPassive(): ?ChampionPassive
+    {
+        return $this->passive;
+    }
+
+    public function setpassive(?ChampionPassive $passive): Champion
+    {
+        $this->passive = $passive;
         return $this;
     }
 }
