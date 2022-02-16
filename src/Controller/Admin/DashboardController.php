@@ -47,7 +47,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::section("Initialisation",'fas fa-home');
+        yield MenuItem::section("Initialisation", 'fas fa-home');
         yield MenuItem::subMenu("Tier", 'fas fa-list')->setSubItems([
             MenuItem::linkToCrud("Add", 'fas fa-plus', Tier::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud("Liste", 'fas fa-plus', Tier::class)->setAction(Crud::PAGE_INDEX),
