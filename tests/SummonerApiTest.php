@@ -2,7 +2,6 @@
 
 namespace App\Tests;
 
-use App\Services\API\LOL\ChampionRotationApi;
 use App\Services\API\LOL\Model\Summoner;
 use App\Services\API\LOL\SummonerApi;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

@@ -2,10 +2,9 @@
 
 namespace App\Command;
 
-use App\Entity\Summoner;
 use App\Entity\Version;
 use App\Repository\VersionRepository;
-use App\Services\API\LOL\GeneralApi;
+use App\Services\API\LOL\DataDragon\GeneralApi;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
