@@ -12,7 +12,7 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @param MatchApi $matchApi
+     * @param ItemApi $itemApi
      * @return Response
      */
     public function home(ItemApi $itemApi): Response

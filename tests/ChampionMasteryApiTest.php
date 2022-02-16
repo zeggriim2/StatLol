@@ -64,14 +64,14 @@ class ChampionMasteryApiTest extends KernelTestCase
         ));
     }
 
-    public function testChampionMasterybySummonerIdSumScoreAllChampSuccess()
+    public function testChampionMasteryBySummonerIdSumScoreAllChampSuccess()
     {
         $this->assertIsInt($this->championMasteryApi->championMasterSumLvlAllChampion(
             "tSmVTVjydJYj5gbjMy8IhFkyMpgWhc4JNdH4ZbqHal3maT4"
         ));
     }
 
-    public function testChampionMasterybySummonerIdSumScoreAllChampEmpty()
+    public function testChampionMasteryBySummonerIdSumScoreAllChampEmpty()
     {
         $this->assertNull(
             $this->championMasteryApi->championMasterSumLvlAllChampion("")
