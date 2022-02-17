@@ -61,6 +61,7 @@ class ImagePassive
 
     /**
      * @ORM\OneToMany(targetEntity=PassiveChampion::class, mappedBy="imagePassive")
+     * @var Collection|PassiveChampion[]
      */
     private $passiveChampions;
 
