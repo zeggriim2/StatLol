@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PassiveChampionRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -47,6 +48,7 @@ class PassiveChampion
 
     public function __construct()
     {
+        $this->createdAt = new DateTimeImmutable();
         $this->champions = new ArrayCollection();
     }
 

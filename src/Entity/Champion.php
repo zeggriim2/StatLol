@@ -13,6 +13,7 @@ use App\Entity\ParTypeChampion;
 use App\Entity\PassiveChampion;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ChampionRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -128,6 +129,7 @@ class Champion
 
     public function __construct()
     {
+        $this->createdAt =  new DateTimeImmutable();
         $this->spells = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->skins = new ArrayCollection();

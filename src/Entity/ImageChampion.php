@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ImageChampionRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -67,6 +68,7 @@ class ImageChampion
 
     public function __construct()
     {
+        $this->createdAt = new DateTimeImmutable();
         $this->champions = new ArrayCollection();
     }
 
