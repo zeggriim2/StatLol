@@ -35,7 +35,7 @@ class PassiveChampion
     /**
      * @ORM\ManyToOne(targetEntity=ImagePassive::class, inversedBy="passiveChampions")
      */
-    private $imagePassive;
+    private ?ImagePassive $imagePassive;
 
     public function getId(): ?int
     {
