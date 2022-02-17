@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ImageChampionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,6 +58,17 @@ class ImageChampion
      * @ORM\Column(type="datetime_immutable")
      */
     private \DateTimeImmutable $createdAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="image")
+     * @var Collection|Champion[]
+     */
+    private $champions;
+
+    public function __construct()
+    {
+        $this->champions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -154,6 +167,36 @@ class ImageChampion
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Champion[]
+     */
+    public function getChampions(): Collection
+    {
+        return $this->champions;
+    }
+
+    public function addChampion(Champion $champion): self
+    {
+        if (!$this->champions->contains($champion)) {
+            $this->champions[] = $champion;
+            $champion->setImage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChampion(Champion $champion): self
+    {
+        if ($this->champions->removeElement($champion)) {
+            // set the owning side to null (unless already changed)
+            if ($champion->getImage() === $this) {
+                $champion->setImage(null);
+            }
+        }
 
         return $this;
     }

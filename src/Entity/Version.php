@@ -30,6 +30,17 @@ class Version
      */
     private \DateTimeImmutable $createdAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="version")
+     * @var Collection|Champion[]
+     */
+    private $champions;
+
+    public function __construct()
+    {
+        $this->champions = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,5 +76,35 @@ class Version
     public function updatedTimestamps(): void
     {
         $this->setCreatedAt(new \DateTimeImmutable('now'));
+    }
+
+    /**
+     * @return Collection|Champion[]
+     */
+    public function getChampions(): Collection
+    {
+        return $this->champions;
+    }
+
+    public function addChampion(Champion $champion): self
+    {
+        if (!$this->champions->contains($champion)) {
+            $this->champions[] = $champion;
+            $champion->setVersion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChampion(Champion $champion): self
+    {
+        if ($this->champions->removeElement($champion)) {
+            // set the owning side to null (unless already changed)
+            if ($champion->getVersion() === $this) {
+                $champion->setVersion(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -42,6 +42,11 @@ class InfoChampion
      */
     private \DateTimeImmutable $createdAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Champion::class, mappedBy="info", cascade={"persist", "remove"})
+     */
+    private ?Champion $champion;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,28 @@ class InfoChampion
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getChampion(): ?Champion
+    {
+        return $this->champion;
+    }
+
+    public function setChampion(?Champion $champion): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($champion === null && $this->champion !== null) {
+            $this->champion->setInfo(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($champion !== null && $champion->getInfo() !== $this) {
+            $champion->setInfo($this);
+        }
+
+        $this->champion = $champion;
 
         return $this;
     }

@@ -127,6 +127,11 @@ class StatChampion
      */
     private ?\DateTimeImmutable $updatedAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Champion::class, mappedBy="stat", cascade={"persist", "remove"})
+     */
+    private ?Champion $champion;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -392,6 +397,28 @@ class StatChampion
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getChampion(): ?Champion
+    {
+        return $this->champion;
+    }
+
+    public function setChampion(?Champion $champion): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($champion === null && $this->champion !== null) {
+            $this->champion->setStat(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($champion !== null && $champion->getStat() !== $this) {
+            $champion->setStat($this);
+        }
+
+        $this->champion = $champion;
 
         return $this;
     }

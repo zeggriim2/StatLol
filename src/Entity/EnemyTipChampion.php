@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ParTypeChampionRepository;
+use App\Repository\EnemyTipChampionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ParTypeChampionRepository::class)
+ * @ORM\Entity(repositoryClass=EnemyTipChampionRepository::class)
  */
-class ParTypeChampion
+class EnemyTipChampion
 {
     /**
      * @ORM\Id
@@ -20,9 +20,19 @@ class ParTypeChampion
     private int $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="text")
      */
-    private string $name;
+    private string $enemyTip1;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private string $enemyTip2;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private string $enemyTip3;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -30,7 +40,7 @@ class ParTypeChampion
     private \DateTimeImmutable $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="parType")
+     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="enemyTip")
      * @var Collection|Champion[]
      */
     private $champions;
@@ -45,14 +55,38 @@ class ParTypeChampion
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getEnemyTip1(): ?string
     {
-        return $this->name;
+        return $this->enemyTip1;
     }
 
-    public function setName(string $name): self
+    public function setEnemyTip1(string $enemyTip1): self
     {
-        $this->name = $name;
+        $this->enemyTip1 = $enemyTip1;
+
+        return $this;
+    }
+
+    public function getEnemyTip2(): ?string
+    {
+        return $this->enemyTip2;
+    }
+
+    public function setEnemyTip2(string $enemyTip2): self
+    {
+        $this->enemyTip2 = $enemyTip2;
+
+        return $this;
+    }
+
+    public function getEnemyTip3(): ?string
+    {
+        return $this->enemyTip3;
+    }
+
+    public function setEnemyTip3(string $enemyTip3): self
+    {
+        $this->enemyTip3 = $enemyTip3;
 
         return $this;
     }
@@ -81,7 +115,7 @@ class ParTypeChampion
     {
         if (!$this->champions->contains($champion)) {
             $this->champions[] = $champion;
-            $champion->setParType($this);
+            $champion->setEnemyTip($this);
         }
 
         return $this;
@@ -91,8 +125,8 @@ class ParTypeChampion
     {
         if ($this->champions->removeElement($champion)) {
             // set the owning side to null (unless already changed)
-            if ($champion->getParType() === $this) {
-                $champion->setParType(null);
+            if ($champion->getEnemyTip() === $this) {
+                $champion->setEnemyTip(null);
             }
         }
 

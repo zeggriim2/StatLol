@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ParTypeChampionRepository;
+use App\Repository\AllyTipChampionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ParTypeChampionRepository::class)
+ * @ORM\Entity(repositoryClass=AllyTipChampionRepository::class)
  */
-class ParTypeChampion
+class AllyTipChampion
 {
     /**
      * @ORM\Id
@@ -20,9 +20,19 @@ class ParTypeChampion
     private int $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="text")
      */
-    private string $name;
+    private string $allyTip1;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private string $allyTip2;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private string $allyTip3;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -30,7 +40,7 @@ class ParTypeChampion
     private \DateTimeImmutable $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="parType")
+     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="allyTip")
      * @var Collection|Champion[]
      */
     private $champions;
@@ -45,14 +55,38 @@ class ParTypeChampion
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getAllyTip1(): ?string
     {
-        return $this->name;
+        return $this->allyTip1;
     }
 
-    public function setName(string $name): self
+    public function setAllyTip1(string $allyTip1): self
     {
-        $this->name = $name;
+        $this->allyTip1 = $allyTip1;
+
+        return $this;
+    }
+
+    public function getAllyTip2(): ?string
+    {
+        return $this->allyTip2;
+    }
+
+    public function setAllyTip2(string $allyTip2): self
+    {
+        $this->allyTip2 = $allyTip2;
+
+        return $this;
+    }
+
+    public function getAllyTip3(): ?string
+    {
+        return $this->allyTip3;
+    }
+
+    public function setAllyTip3(string $allyTip3): self
+    {
+        $this->allyTip3 = $allyTip3;
 
         return $this;
     }
@@ -81,7 +115,7 @@ class ParTypeChampion
     {
         if (!$this->champions->contains($champion)) {
             $this->champions[] = $champion;
-            $champion->setParType($this);
+            $champion->setAllyTip($this);
         }
 
         return $this;
@@ -91,8 +125,8 @@ class ParTypeChampion
     {
         if ($this->champions->removeElement($champion)) {
             // set the owning side to null (unless already changed)
-            if ($champion->getParType() === $this) {
-                $champion->setParType(null);
+            if ($champion->getAllyTip() === $this) {
+                $champion->setAllyTip(null);
             }
         }
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PassiveChampionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,17 @@ class PassiveChampion
      * @ORM\ManyToOne(targetEntity=ImagePassive::class, inversedBy="passiveChampions")
      */
     private ?ImagePassive $imagePassive;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="passive")
+     * @var Collection|Champion[]
+     */
+    private $champions;
+
+    public function __construct()
+    {
+        $this->champions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +99,36 @@ class PassiveChampion
     public function setImagePassive(?ImagePassive $imagePassive): self
     {
         $this->imagePassive = $imagePassive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Champion[]
+     */
+    public function getChampions(): Collection
+    {
+        return $this->champions;
+    }
+
+    public function addChampion(Champion $champion): self
+    {
+        if (!$this->champions->contains($champion)) {
+            $this->champions[] = $champion;
+            $champion->setPassive($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChampion(Champion $champion): self
+    {
+        if ($this->champions->removeElement($champion)) {
+            // set the owning side to null (unless already changed)
+            if ($champion->getPassive() === $this) {
+                $champion->setPassive(null);
+            }
+        }
 
         return $this;
     }

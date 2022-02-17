@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TagChampionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,17 @@ class TagChampion
      * @ORM\Column(type="datetime_immutable")
      */
     private \DateTimeImmutable $created_at;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Champion::class, mappedBy="tags")
+     * @var Collection|Champion[]
+     */
+    private $champions;
+
+    public function __construct()
+    {
+        $this->champions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,6 +65,33 @@ class TagChampion
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Champion[]
+     */
+    public function getChampions(): Collection
+    {
+        return $this->champions;
+    }
+
+    public function addChampion(Champion $champion): self
+    {
+        if (!$this->champions->contains($champion)) {
+            $this->champions[] = $champion;
+            $champion->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChampion(Champion $champion): self
+    {
+        if ($this->champions->removeElement($champion)) {
+            $champion->removeTag($this);
+        }
 
         return $this;
     }
