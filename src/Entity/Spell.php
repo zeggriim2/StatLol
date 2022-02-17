@@ -15,107 +15,109 @@ class Spell
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=25)
      */
-    private $idSpell;
+    private string $idSpell;
 
     /**
      * @ORM\Column(type="string", length=40)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $description;
+    private string $description;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $tooltip;
+    private string $tooltip;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $maxrank;
+    private int $maxrank;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $coolDownBurn;
+    private string $coolDownBurn;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $costBurn;
+    private string $costBurn;
 
     /**
      * @ORM\Column(type="json")
+     * @var array<string>
      */
-    private $effect = [];
+    private array $effect = [];
 
     /**
      * @ORM\Column(type="json")
+     * @var array<string>
      */
-    private $effectBurn = [];
+    private array $effectBurn = [];
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $costType;
+    private string $costType;
 
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private $maxammo;
+    private string $maxammo;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $rangeBurn;
+    private string $rangeBurn;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $resource;
+    private string $resource;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTimeImmutable $updatedAt;
 
     /**
      * @ORM\OneToOne(targetEntity=CoolDownSpell::class, inversedBy="spell", cascade={"persist", "remove"})
      */
-    private $coolDown;
+    private ?CoolDownSpell $coolDown;
 
     /**
      * @ORM\OneToOne(targetEntity=LevelTipSpell::class, inversedBy="spell", cascade={"persist", "remove"})
      */
-    private $levelTip;
+    private ?LevelTipSpell $levelTip;
 
     /**
      * @ORM\OneToOne(targetEntity=CostSpell::class, inversedBy="spell", cascade={"persist", "remove"})
      */
-    private $cost;
+    private ?CostSpell $cost;
 
     /**
      * @ORM\OneToOne(targetEntity=RangeSpell::class, inversedBy="spell", cascade={"persist", "remove"})
      */
-    private $rangeSpell;
+    private ?RangeSpell $rangeSpell;
 
     /**
      * @ORM\ManyToOne(targetEntity=ImageSpell::class, inversedBy="spells")
      */
-    private $image;
+    private ?ImageSpell $image;
 
     public function getId(): ?int
     {
@@ -206,11 +208,17 @@ class Spell
         return $this;
     }
 
+    /**
+     * @return array<string>|null
+     */
     public function getEffect(): ?array
     {
         return $this->effect;
     }
 
+    /**
+     * @param array<string> $effect
+     */
     public function setEffect(array $effect): self
     {
         $this->effect = $effect;
@@ -218,11 +226,17 @@ class Spell
         return $this;
     }
 
+    /**
+     * @return array<string>|null
+     */
     public function getEffectBurn(): ?array
     {
         return $this->effectBurn;
     }
 
+    /**
+     * @param array<string> $effectBurn
+     */
     public function setEffectBurn(array $effectBurn): self
     {
         $this->effectBurn = $effectBurn;
