@@ -3,6 +3,7 @@
 namespace App\Services\API\LOL\Model\DataDragon\Champion;
 
 use App\Services\API\LOL\Model\DataDragon\Commun\Image;
+use App\Services\API\LOL\Model\DataDragon\Champion\ChampionSpellLevelTip;
 
 class ChampionSpell
 {
@@ -10,10 +11,7 @@ class ChampionSpell
     private string $name;
     private string $description;
     private string $tooltip;
-    /**
-     * @var array<string,array<string>>
-     */
-    private array $leveltip;
+    private ChampionSpellLevelTip $leveltip;
     private int $maxrank;
     /**
      * @var array<int>
@@ -87,20 +85,12 @@ class ChampionSpell
         return $this;
     }
 
-
-    /**
-     * @return array<string,array<string>>
-     */
-    public function getLeveltip(): array
+    public function getLeveltip(): ChampionSpellLevelTip
     {
         return $this->leveltip;
     }
 
-
-    /**
-     * @param array<string,array<string>> $leveltip
-     */
-    public function setLeveltip(array $leveltip): ChampionSpell
+    public function setLeveltip(ChampionSpellLevelTip $leveltip): ChampionSpell
     {
         $this->leveltip = $leveltip;
         return $this;
