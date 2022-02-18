@@ -4,17 +4,17 @@ namespace App\Services\API\LOL\Model\DataDragon\Champion;
 
 class ChampionSkin
 {
-    private string $id;
+    private ?string $id;
     private int $num;
     private string $name;
     private bool $chromas;
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId(string $id): ChampionSkin
+    public function setId(?string $id): ChampionSkin
     {
         $this->id = $id;
         return $this;

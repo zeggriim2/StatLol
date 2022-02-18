@@ -34,9 +34,9 @@ class ChampionSpell
     private string $costType;
     private string $maxammo;
      /**
-     * @var array<int>
+     * @var array<int>|string
      */
-    private array $range;
+    private $range;
     private string $rangeBurn;
     private Image $image;
     private string $resource;
@@ -221,17 +221,17 @@ class ChampionSpell
     }
 
     /**
-     * @return array<int>
+     * @return array<int>|string
      */
-    public function getRange(): array
+    public function getRange()
     {
         return $this->range;
     }
 
     /**
-     * @param array<int> $range
+     * @param array<int>|string $range
      */
-    public function setRange(array $range): ChampionSpell
+    public function setRange($range): ChampionSpell
     {
         $this->range = $range;
         return $this;

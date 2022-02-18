@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\StatChampionRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,9 +24,9 @@ class StatChampion
     private float $Hp;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $HpPerLevel;
+    private float $HpPerLevel;
 
     /**
      * @ORM\Column(type="float")
@@ -38,14 +39,14 @@ class StatChampion
     private float $MpPerLevel;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $MoveSpeed;
+    private float $MoveSpeed;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $Armor;
+    private float $Armor;
 
     /**
      * @ORM\Column(type="float")
@@ -63,9 +64,9 @@ class StatChampion
     private float $SpellBlockPerLevel;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $AttackRange;
+    private float $AttackRange;
 
     /**
      * @ORM\Column(type="float")
@@ -88,14 +89,14 @@ class StatChampion
     private float $MpRegenPerLevel;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $Crit;
+    private float $Crit;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private int $CritPerLevel;
+    private float $CritPerLevel;
 
     /**
      * @ORM\Column(type="float")
@@ -132,6 +133,11 @@ class StatChampion
      */
     private ?Champion $champion;
 
+    public function __construct()
+    {
+        $this->createdAt = new DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,12 +155,12 @@ class StatChampion
         return $this;
     }
 
-    public function getHpPerLevel(): ?int
+    public function getHpPerLevel(): ?float
     {
         return $this->HpPerLevel;
     }
 
-    public function setHpPerLevel(int $HpPerLevel): self
+    public function setHpPerLevel(float $HpPerLevel): self
     {
         $this->HpPerLevel = $HpPerLevel;
 
@@ -185,24 +191,24 @@ class StatChampion
         return $this;
     }
 
-    public function getMoveSpeed(): ?int
+    public function getMoveSpeed(): ?float
     {
         return $this->MoveSpeed;
     }
 
-    public function setMoveSpeed(int $MoveSpeed): self
+    public function setMoveSpeed(float $MoveSpeed): self
     {
         $this->MoveSpeed = $MoveSpeed;
 
         return $this;
     }
 
-    public function getArmor(): ?int
+    public function getArmor(): ?float
     {
         return $this->Armor;
     }
 
-    public function setArmor(int $Armor): self
+    public function setArmor(float $Armor): self
     {
         $this->Armor = $Armor;
 
@@ -245,12 +251,12 @@ class StatChampion
         return $this;
     }
 
-    public function getAttackRange(): ?int
+    public function getAttackRange(): ?float
     {
         return $this->AttackRange;
     }
 
-    public function setAttackRange(int $AttackRange): self
+    public function setAttackRange(float $AttackRange): self
     {
         $this->AttackRange = $AttackRange;
 
@@ -305,24 +311,24 @@ class StatChampion
         return $this;
     }
 
-    public function getCrit(): ?int
+    public function getCrit(): ?float
     {
         return $this->Crit;
     }
 
-    public function setCrit(int $Crit): self
+    public function setCrit(float $Crit): self
     {
         $this->Crit = $Crit;
 
         return $this;
     }
 
-    public function getCritPerLevel(): ?int
+    public function getCritPerLevel(): ?float
     {
         return $this->CritPerLevel;
     }
 
-    public function setCritPerLevel(int $CritPerLevel): self
+    public function setCritPerLevel(float $CritPerLevel): self
     {
         $this->CritPerLevel = $CritPerLevel;
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\InfoChampionRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +47,11 @@ class InfoChampion
      * @ORM\OneToOne(targetEntity=Champion::class, mappedBy="info", cascade={"persist", "remove"})
      */
     private ?Champion $champion;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
