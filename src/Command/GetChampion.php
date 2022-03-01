@@ -97,17 +97,17 @@ class GetChampion extends Command
             $championImage = $this->buildImageChampion($championApi->getImage());
             $champion->setImage($championImage);
         }
+
+        // TODO Info
+        if ($championApi->getInfo() !== null) {
+            $championInfo = $this->buildInfoChampion($championApi->getInfo());
+            $champion->setInfoChampion($championInfo);
+        }
 /*
         // TODO Stats
         if ($championApi->getStats() !== null) {
             $championStat = $this->buildStatChampion($championApi->getStats());
             $champion->setStat($championStat);
-        }
-
-        // TODO Info
-        if ($championApi->getInfo() !== null) {
-            $championInfo = $this->buildInfoChampion($championApi->getInfo());
-            $champion->setInfo($championInfo);
         }
 
         // TODO SPELLS
@@ -145,7 +145,12 @@ class GetChampion extends Command
     ): PassiveChampion {
         /**@var PassiveChampion|null $passiveChampion **/
         $passiveChampion = $this->doctrine->getRepository(PassiveChampion::class)
-                                    ->findOneBy(["name" => $passiveChampionApi->getName()]);
+                                    ->findOneBy(
+                                        [
+                                            "name" => $passiveChampionApi->getName(),
+                                            "description" => $passiveChampionApi->getDescription()
+                                        ]
+                                    );
 
         if (
             $passiveChampion === null ||
@@ -181,6 +186,53 @@ class GetChampion extends Command
         return $passiveChampion;
     }
 
+    private function buildImageChampion(ChampionImageDataDragon $imageChampionApi): ImageChampion
+    {
+        $imageChampion = $this->doctrine->getRepository(ImageChampion::class)
+                ->findOneBy(["full" => $imageChampionApi->getFull()]);
+        
+        if ($imageChampion === null) {
+            $imageChampion = (new ImageChampion())
+                ->setFull($imageChampionApi->getFull())
+                ->setSprite($imageChampionApi->getSprite())
+                ->setGroupement($imageChampionApi->getGroup())
+                ->setPosX($imageChampionApi->getX())
+                ->setPosY($imageChampionApi->getY())
+                ->setPosW($imageChampionApi->getW())
+                ->setPosH($imageChampionApi->getH())
+            ;
+
+            $this->doctrine->getManager()->persist($imageChampion);
+        }
+
+        return $imageChampion;
+    }
+
+    private function buildInfoChampion(ChampionInfoDataDragon $infoChampionApi): InfoChampion
+    {
+        $infoChampion = $this->doctrine->getRepository(InfoChampion::class)
+                ->findOneBy(
+                    [
+                        "attack" => $infoChampionApi->getAttack(),
+                        "defense" => $infoChampionApi->getDefense(),
+                        "magic" => $infoChampionApi->getMagic(),
+                        "difficulty" => $infoChampionApi->getDifficulty(),
+                    ]
+                );
+        if($infoChampion === null) {
+            $infoChampion = (new InfoChampion())
+                ->setAttack($infoChampionApi->getAttack())
+                ->setDefense($infoChampionApi->getDefense())
+                ->setMagic($infoChampionApi->getMagic())
+                ->setDifficulty($infoChampionApi->getDifficulty())
+            ;
+
+            $this->doctrine->getManager()->persist($infoChampion);
+        }
+
+        return $infoChampion;
+    }
+
     private function buildStatChampion(ChampionStatDataDragon $statChampionApi): StatChampion
     {
         $statChampion = (new StatChampion())
@@ -207,40 +259,6 @@ class GetChampion extends Command
         ;
 
         return $statChampion;
-    }
-
-    private function buildImageChampion(ChampionImageDataDragon $imageChampionApi): ImageChampion
-    {
-        $$imageChampion = $this->doctrine->getRepository(ImageChampion::class)
-                ->findOneBy(["full" => $imageChampionApi->getFull()]);
-
-        if ($imageChampionApi === null) {
-            $imageChampion = (new ImageChampion())
-                ->setFull($imageChampionApi->getFull())
-                ->setSprite($imageChampionApi->getSprite())
-                ->setGroupement($imageChampionApi->getGroup())
-                ->setPosX($imageChampionApi->getX())
-                ->setPosY($imageChampionApi->getY())
-                ->setPosW($imageChampionApi->getW())
-                ->setPosH($imageChampionApi->getH())
-            ;
-
-            $this->doctrine->getManager()->persist($imageChampion);
-        }
-
-        return $imageChampion;
-    }
-
-    private function buildInfoChampion(ChampionInfoDataDragon $infoChampionApi): InfoChampion
-    {
-        $infoChampion = (new InfoChampion())
-            ->setAttack($infoChampionApi->getAttack())
-            ->setDefense($infoChampionApi->getDefense())
-            ->setMagic($infoChampionApi->getMagic())
-            ->setDifficulty($infoChampionApi->getDifficulty())
-        ;
-
-        return $infoChampion;
     }
 
     private function buildParTypeChampion(string $parTypeChampionApi): ParTypeChampion

@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\InfoChampionRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\InfoChampionRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=InfoChampionRepository::class)
@@ -44,13 +46,14 @@ class InfoChampion
     private \DateTimeImmutable $createdAt;
 
     /**
-     * @ORM\OneToOne(targetEntity=Champion::class, mappedBy="info", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="infoChampion")
      */
-    private ?Champion $champion;
+    private $champions;
 
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
+        $this->champions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,24 +121,32 @@ class InfoChampion
         return $this;
     }
 
-    public function getChampion(): ?Champion
+    /**
+     * @return Collection|Champion[]
+     */
+    public function getChampions(): Collection
     {
-        return $this->champion;
+        return $this->champions;
     }
 
-    public function setChampion(?Champion $champion): self
+    public function addChampion(Champion $champion): self
     {
-        // unset the owning side of the relation if necessary
-        if ($champion === null && $this->champion !== null) {
-            $this->champion->setInfo(null);
+        if (!$this->champions->contains($champion)) {
+            $this->champions[] = $champion;
+            $champion->setInfoChampion($this);
         }
 
-        // set the owning side of the relation if necessary
-        if ($champion !== null && $champion->getInfo() !== $this) {
-            $champion->setInfo($this);
-        }
+        return $this;
+    }
 
-        $this->champion = $champion;
+    public function removeChampion(Champion $champion): self
+    {
+        if ($this->champions->removeElement($champion)) {
+            // set the owning side to null (unless already changed)
+            if ($champion->getInfoChampion() === $this) {
+                $champion->setInfoChampion(null);
+            }
+        }
 
         return $this;
     }

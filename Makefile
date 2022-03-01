@@ -1,4 +1,4 @@
-.PHONY: composer-install tests install fixtures database prepare tests phpstan php-cs-fixer composer-valid doctrine fix analyse
+.PHONY: composer-install tests install fixtures database prepare tests phpstan php-cs-fixer composer-valid doctrine fix analyse init
 
 install:
 	cp .env.dist .env.$(env).local
@@ -21,6 +21,7 @@ database-dev:
 	php bin/console doctrine:database:drop --if-exists --force --env=dev
 	php bin/console doctrine:database:create --env=dev
 	php bin/console doctrine:schema:update --force --env=dev
+	make init
 
 database-test:
 	php bin/console doctrine:database:drop --if-exists --force --env=test
@@ -51,6 +52,8 @@ analyze:
 	php bin/console lint:twig templates/
 	php vendor/bin/phpstan analyse -c phpstan.neon src --level 7 --no-progress
 
+analyse-test: composer-valid
+
 phpstan:
 	php vendor/bin/phpstan analyse -c phpstan.neon src --level 7 --no-progress
 
@@ -59,4 +62,8 @@ test: ## Test Unitaire
 
 phpcs:
 	php vendor/bin/phpcs
+
+
+composer-valid:
+	composer valid
 

@@ -96,11 +96,6 @@ class Champion
     private $spells;
 
     /**
-     * @ORM\OneToOne(targetEntity=InfoChampion::class, inversedBy="champion", cascade={"persist", "remove"})
-     */
-    private ?InfoChampion $info;
-
-    /**
      * @ORM\ManyToOne(targetEntity=ParTypeChampion::class, inversedBy="champions")
      */
     private ?ParTypeChampion $parType;
@@ -126,6 +121,11 @@ class Champion
      * @ORM\ManyToOne(targetEntity=AllyTipChampion::class, inversedBy="champions")
      */
     private ?AllyTipChampion $allyTip;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=InfoChampion::class, inversedBy="champions")
+     */
+    private $infoChampion;
 
     public function __construct()
     {
@@ -308,18 +308,6 @@ class Champion
         return $this;
     }
 
-    public function getInfo(): ?InfoChampion
-    {
-        return $this->info;
-    }
-
-    public function setInfo(?InfoChampion $info): self
-    {
-        $this->info = $info;
-
-        return $this;
-    }
-
     public function getParType(): ?ParTypeChampion
     {
         return $this->parType;
@@ -400,6 +388,18 @@ class Champion
     public function setAllyTip(?AllyTipChampion $allyTip): self
     {
         $this->allyTip = $allyTip;
+
+        return $this;
+    }
+
+    public function getInfoChampion(): ?InfoChampion
+    {
+        return $this->infoChampion;
+    }
+
+    public function setInfoChampion(?InfoChampion $infoChampion): self
+    {
+        $this->infoChampion = $infoChampion;
 
         return $this;
     }
