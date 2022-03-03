@@ -25,8 +25,9 @@ class VersionRepository extends ServiceEntityRepository
     public function getVersionWithoutLolPatch()
     {
         return $this->createQueryBuilder("v")
-            ->where("v.name NOT LIKE :name")
-            ->setParameter("name", "%lolpatch%")
+            ->where("v.name NOT LIKE :lolpatch")
+            ->andWhere("v.name NOT LIKE :zero")
+            ->setParameters(["lolpatch" => "%lolpatch%", "zero" => "0.%"])
             ->getQuery()
             ->getResult()
         ;
