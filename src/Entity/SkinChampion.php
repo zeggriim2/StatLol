@@ -26,19 +26,19 @@ class SkinChampion
     private int $skinId;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
-    private int $num;
+    private ?int $num;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(type="string", length=55)
      */
     private string $name;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private bool $chromas;
+    private ?bool $chromas;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -79,7 +79,7 @@ class SkinChampion
         return $this->num;
     }
 
-    public function setNum(int $num): self
+    public function setNum(?int $num): self
     {
         $this->num = $num;
 
@@ -103,7 +103,7 @@ class SkinChampion
         return $this->chromas;
     }
 
-    public function setChromas(bool $chromas): self
+    public function setChromas(?bool $chromas): self
     {
         $this->chromas = $chromas;
 

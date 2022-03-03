@@ -109,9 +109,9 @@ class StatChampion
     private float $AttackDamagePerLevel;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
-    private float $AttackSpeed;
+    private ?float $AttackSpeed;
 
     /**
      * @ORM\Column(type="float")
@@ -364,7 +364,7 @@ class StatChampion
         return $this->AttackSpeed;
     }
 
-    public function setAttackSpeed(float $AttackSpeed): self
+    public function setAttackSpeed(?float $AttackSpeed): self
     {
         $this->AttackSpeed = $AttackSpeed;
 

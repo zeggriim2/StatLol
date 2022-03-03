@@ -21,19 +21,19 @@ class EnemyTipChampion
     private int $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private string $enemyTip1;
+    private ?string $enemyTip1;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private string $enemyTip2;
+    private ?string $enemyTip2;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private string $enemyTip3;
+    private ?string $enemyTip3;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -62,7 +62,7 @@ class EnemyTipChampion
         return $this->enemyTip1;
     }
 
-    public function setEnemyTip1(string $enemyTip1): self
+    public function setEnemyTip1(?string $enemyTip1): self
     {
         $this->enemyTip1 = $enemyTip1;
 
@@ -74,7 +74,7 @@ class EnemyTipChampion
         return $this->enemyTip2;
     }
 
-    public function setEnemyTip2(string $enemyTip2): self
+    public function setEnemyTip2(?string $enemyTip2): self
     {
         $this->enemyTip2 = $enemyTip2;
 
@@ -86,7 +86,7 @@ class EnemyTipChampion
         return $this->enemyTip3;
     }
 
-    public function setEnemyTip3(string $enemyTip3): self
+    public function setEnemyTip3(?string $enemyTip3): self
     {
         $this->enemyTip3 = $enemyTip3;
 

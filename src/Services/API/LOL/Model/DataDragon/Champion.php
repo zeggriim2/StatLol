@@ -23,7 +23,7 @@ class Champion
      * @var array<string>
      */
     private array $tags;
-    private string $partype;
+    private ?string $partype = null;
     private ChampionStat $stats;
     /**
      * @var ChampionSkin[]|null
@@ -150,12 +150,12 @@ class Champion
         return $this;
     }
 
-    public function getPartype(): string
+    public function getPartype(): ?string
     {
         return $this->partype;
     }
 
-    public function setPartype(string $partype): Champion
+    public function setPartype(?string $partype): Champion
     {
         $this->partype = $partype;
         return $this;
