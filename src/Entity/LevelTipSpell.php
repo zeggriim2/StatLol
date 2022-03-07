@@ -40,6 +40,11 @@ class LevelTipSpell
      */
     private ?Spell $spell;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

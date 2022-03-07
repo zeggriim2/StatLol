@@ -32,7 +32,7 @@ class ChampionSpell
      */
     private array $effectBurn;
     private string $costType;
-    private string $maxammo;
+    private ?string $maxammo = null;
      /**
      * @var array<int>|string
      */
@@ -209,12 +209,12 @@ class ChampionSpell
         return $this;
     }
 
-    public function getMaxammo(): string
+    public function getMaxammo(): ?string
     {
         return $this->maxammo;
     }
 
-    public function setMaxammo(string $maxammo): ChampionSpell
+    public function setMaxammo(?string $maxammo): ChampionSpell
     {
         $this->maxammo = $maxammo;
         return $this;

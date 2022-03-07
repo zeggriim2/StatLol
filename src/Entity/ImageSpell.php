@@ -67,6 +67,7 @@ class ImageSpell
 
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
         $this->spells = new ArrayCollection();
     }
 

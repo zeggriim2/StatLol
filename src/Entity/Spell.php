@@ -72,9 +72,9 @@ class Spell
     private string $costType;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=5, nullable=true)
      */
-    private string $maxammo;
+    private ?string $maxammo;
 
     /**
      * @ORM\Column(type="string", length=10)
@@ -129,6 +129,7 @@ class Spell
 
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
         $this->champions = new ArrayCollection();
     }
 
@@ -274,7 +275,7 @@ class Spell
         return $this->maxammo;
     }
 
-    public function setMaxammo(string $maxammo): self
+    public function setMaxammo(?string $maxammo): self
     {
         $this->maxammo = $maxammo;
 
