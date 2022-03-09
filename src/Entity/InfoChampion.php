@@ -47,6 +47,7 @@ class InfoChampion
 
     /**
      * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="infoChampion")
+     * @var Collection|Champion[]
      */
     private $champions;
 

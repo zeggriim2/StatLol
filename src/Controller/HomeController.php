@@ -19,8 +19,6 @@ class HomeController extends AbstractController
     public function home(ChampionApi $championApi): Response
     {
         $champions = $championApi->champion("jinx", "12.3.1", "fr_FR");
-
-        dd($champions);
 //        dd($matchApi->matchByMatchId("EUW1_5694485275"));
         return $this->render("home.html.twig");
     }

@@ -85,7 +85,7 @@ class GetChampion extends Command
         return Command::SUCCESS;
     }
 
-    private function addChampionInBdd(ChampionDataDragon $championApi, Version $version)
+    private function addChampionInBdd(ChampionDataDragon $championApi, Version $version): bool
     {
         $champion = (new Champion())
             ->setName($championApi->getName())
@@ -114,9 +114,9 @@ class GetChampion extends Command
             $championInfo = $this->buildInfoChampion($championApi->getInfo());
             $champion->setInfoChampion($championInfo);
         }
-        
+
         // TODO ParType
-        if($championApi->getPartype() !== null) {
+        if ($championApi->getPartype() !== null) {
             $championParType = $this->buildParTypeChampion($championApi->getPartype());
             $champion->setParType($championParType);
         }
@@ -129,13 +129,13 @@ class GetChampion extends Command
 
         // TODO Tags
         $championTags = $this->buildTagsChampion($championApi->getTags());
-        foreach($championTags as $championTag) {
+        foreach ($championTags as $championTag) {
             $champion->addTag($championTag);
         }
-        
+
         // TODO Skins
         $championSkins = $this->buildSkinsChampion($championApi->getSkins());
-        foreach($championSkins as $championSkin) {
+        foreach ($championSkins as $championSkin) {
             $champion->addSkin($championSkin);
         }
 
@@ -144,12 +144,12 @@ class GetChampion extends Command
         $champion->setEnemyTip($championEnemyTip);
 
         // TODO AllyTip
-        $championAllyTip = $this->buildAllyTipChampion  ($championApi->getAllytips());
+        $championAllyTip = $this->buildAllyTipChampion($championApi->getAllytips());
         $champion->setAllyTip($championAllyTip);
 
         // TODO SPELLS
-        $championSpells = $this->buildSpellsChampion($championApi->getSpells());        
-        foreach($championSpells as $championSpell) {
+        $championSpells = $this->buildSpellsChampion($championApi->getSpells());
+        foreach ($championSpells as $championSpell) {
             $champion->addSpell($championSpell);
         }
 
@@ -210,7 +210,7 @@ class GetChampion extends Command
     {
         $imageChampion = $this->doctrine->getRepository(ImageChampion::class)
                 ->findOneBy(["full" => $imageChampionApi->getFull()]);
-        
+
         if ($imageChampion === null) {
             $imageChampion = (new ImageChampion())
                 ->setFull($imageChampionApi->getFull())
@@ -239,7 +239,7 @@ class GetChampion extends Command
                         "difficulty" => $infoChampionApi->getDifficulty(),
                     ]
                 );
-        if($infoChampion === null) {
+        if ($infoChampion === null) {
             $infoChampion = (new InfoChampion())
                 ->setAttack($infoChampionApi->getAttack())
                 ->setDefense($infoChampionApi->getDefense())
@@ -329,22 +329,21 @@ class GetChampion extends Command
 
 
     /**
-     * @param ChampionSkin[] $skinsChampionApi
-     * @return SkinChampion[]
+     * @param array<ChampionSkinDataDragon> $skinsChampionApi
+     * @return SkinChampion[] $skinsChampion
      */
     private function buildSkinsChampion(array $skinsChampionApi): array
     {
         $skinsChampion = [];
-        /** @var ChampionSkinDataDragon skinChampionApi **/
+        /** @var ChampionSkinDataDragon $skinChampionApi **/
         foreach ($skinsChampionApi as $skinChampionApi) {
-
             $skinChampion = $this->doctrine->getRepository(SkinChampion::class)
                 ->findOneBy([
                     "skinId" => $skinChampionApi->getId(),
                     "name" => $skinChampionApi->getName()
                 ]);
 
-            if($skinChampion === null) {
+            if ($skinChampion === null) {
                 $skinChampion = (new SkinChampion())
                     ->setSkinId($skinChampionApi->getId())
                     ->setNum($skinChampionApi->getNum())
@@ -361,27 +360,27 @@ class GetChampion extends Command
     }
 
     /**
-     * @param array<string> $enemyTipChampionApi
+     * @param array<string> $enemyTipsChampionApi
      */
     private function buildEnemyTipChampion(array $enemyTipsChampionApi): EnemyTipChampion
     {
-        /**@var EnemyTipChampion|null $enemyTipChampion **/
+        /** @var EnemyTipChampion|null $enemyTipChampion **/
         $enemyTipChampion = $this->doctrine->getRepository(EnemyTipChampion::class)
                         ->findOneBy([
                             "enemyTip1" => $enemyTipsChampionApi[0],
                         ]);
-        if(
+        if (
             $enemyTipChampion === null ||
             (
-                strlen($enemyTipChampion->getEnemyTip1()) !== strlen($enemyTipsChampionApi[0]) && 
-                strlen($enemyTipChampion->getEnemyTip2()) !== strlen($enemyTipsChampionApi[1]) && 
+                strlen($enemyTipChampion->getEnemyTip1()) !== strlen($enemyTipsChampionApi[0]) &&
+                strlen($enemyTipChampion->getEnemyTip2()) !== strlen($enemyTipsChampionApi[1]) &&
                 strlen($enemyTipChampion->getEnemyTip3()) !== strlen($enemyTipsChampionApi[2])
             )
         ) {
             $enemyTipChampion = new EnemyTipChampion();
 
-            for($i = 0 ; $i < count($enemyTipsChampionApi) ;$i++) {
-                $method = "setEnemyTip" . ($i+1);
+            for ($i = 0; $i < count($enemyTipsChampionApi); $i++) {
+                $method = "setEnemyTip" . ($i + 1);
                 $enemyTipChampion->$method($enemyTipsChampionApi[$i]);
             }
             $this->doctrine->getManager()->persist($enemyTipChampion);
@@ -401,8 +400,8 @@ class GetChampion extends Command
                         "allyTip1" => $allyTipChampionApi[0]
                     ]);
 
-        if(
-            $allyTipChampion ===null ||
+        if (
+            $allyTipChampion === null ||
             (
                 strlen($allyTipChampion->getAllyTip1()) !== strlen($allyTipChampionApi[0]) &&
                 strlen($allyTipChampion->getAllyTip2()) !== strlen($allyTipChampionApi[1]) &&
@@ -411,8 +410,8 @@ class GetChampion extends Command
         ) {
             $allyTipChampion = new AllyTipChampion();
 
-            for($i = 0 ; $i < count($allyTipChampionApi) ;$i++) {
-                $method = "setAllyTip" . ($i+1);
+            for ($i = 0; $i < count($allyTipChampionApi); $i++) {
+                $method = "setAllyTip" . ($i + 1);
                 $allyTipChampion->$method($allyTipChampionApi[$i]);
             }
             $this->doctrine->getManager()->persist($allyTipChampion);
@@ -420,12 +419,16 @@ class GetChampion extends Command
         return $allyTipChampion;
     }
 
-    private function buildSpellsChampion(array $spellsChampionApi)
+    /**
+     * @param array<ChampionSpellDataDragon> $spellsChampionApi
+     * @return array<Spell> $spellsChampion
+     */
+    private function buildSpellsChampion(array $spellsChampionApi): array
     {
-        
+
         $spellsChampion = [];
         /** @var ChampionSpellDataDragon $spellChampionApi */
-        foreach($spellsChampionApi as $spellChampionApi) {
+        foreach ($spellsChampionApi as $spellChampionApi) {
             $spellChampion = (new Spell())
                 ->setIdSpell($spellChampionApi->getId())
                 ->setName($spellChampionApi->getName())
@@ -464,11 +467,14 @@ class GetChampion extends Command
         return $spellsChampion;
     }
 
-    private function buildCoolDownSpellChampion(array $coolDown)
+    /**
+     * @param array<int> $coolDown
+     */
+    private function buildCoolDownSpellChampion(array $coolDown): CoolDownSpell
     {
         $coolDownSpellChampion = new CoolDownSpell();
-        for($i=0; $i < count($coolDown); $i++) {
-            $method = "setLevel" . ($i+1);
+        for ($i = 0; $i < count($coolDown); $i++) {
+            $method = "setLevel" . ($i + 1);
             $coolDownSpellChampion->$method($coolDown[$i]);
         }
         $this->doctrine->getManager()->persist($coolDownSpellChampion);
@@ -477,7 +483,7 @@ class GetChampion extends Command
 
     private function buildLevelTipSpellChampion(ChampionSpellLevelTip $levelTip): LevelTipSpell
     {
-        $levelTipSpellChampion = (new LevelTipSpell)
+        $levelTipSpellChampion = (new LevelTipSpell())
             ->setLabel($levelTip->getLabel())
             ->setEffect($levelTip->getEffect())
         ;
@@ -486,11 +492,14 @@ class GetChampion extends Command
         return $levelTipSpellChampion;
     }
 
+    /**
+     * @param array<int> $cost
+     */
     private function buildCostSpellChampion(array $cost): CostSpell
     {
-        $costSpellChampion = new CostSpell;
-        for($i=0; $i < count($cost); $i++) {
-            $method = "setLevel" . ($i+1);
+        $costSpellChampion = new CostSpell();
+        for ($i = 0; $i < count($cost); $i++) {
+            $method = "setLevel" . ($i + 1);
             $costSpellChampion->$method($cost[$i]);
         }
         $this->doctrine->getManager()->persist($costSpellChampion);
@@ -503,10 +512,10 @@ class GetChampion extends Command
      */
     private function buildRangeSpellChampion($range): RangeSpell
     {
-        $rangeSpellChampion = new RangeSpell;
-        if(is_array($range)) {
-            for($i=0; $i < count($range); $i++) {
-                $method = "setLevel" . ($i+1);
+        $rangeSpellChampion = new RangeSpell();
+        if (is_array($range)) {
+            for ($i = 0; $i < count($range); $i++) {
+                $method = "setLevel" . ($i + 1);
                 $rangeSpellChampion->$method($range[$i]);
             }
         } else {
@@ -522,16 +531,15 @@ class GetChampion extends Command
         /**@var ImageSpell|null $imageSpellChampion **/
         $imageSpellChampion = $this->doctrine->getRepository(ImageSpell::class)
                 ->findOneBy(["full" => $imageSpellApi->getFull()]);
-        
-        if(
-            $imageSpellChampion === null || 
+
+        if (
+            $imageSpellChampion === null ||
             $imageSpellChampion->getPosX() !== $imageSpellApi->getX() ||
-            $imageSpellChampion->getPosY() !== $imageSpellApi->getY() || 
-            $imageSpellChampion->getPosW() !== $imageSpellApi->getW() || 
+            $imageSpellChampion->getPosY() !== $imageSpellApi->getY() ||
+            $imageSpellChampion->getPosW() !== $imageSpellApi->getW() ||
             $imageSpellChampion->getPosH() !== $imageSpellApi->getH()
-        )
-        {
-            $imageSpellChampion = (new ImageSpell)
+        ) {
+            $imageSpellChampion = (new ImageSpell())
                 ->setFull($imageSpellApi->getFull())
                 ->setSprite($imageSpellApi->getSprite())
                 ->setGroupement($imageSpellApi->getGroup())
@@ -541,10 +549,10 @@ class GetChampion extends Command
                 ->setPosH($imageSpellApi->getH())
             ;
         }
-        
+
         $this->doctrine->getManager()->persist($imageSpellChampion);
         return $imageSpellChampion;
-    } 
+    }
 
     public function __construct(
         ManagerRegistry $doctrine,

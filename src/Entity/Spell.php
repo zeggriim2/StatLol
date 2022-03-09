@@ -56,7 +56,7 @@ class Spell
 
     /**
      * @ORM\Column(type="json")
-     * @var array<string>
+     * @var array<null|array<int>>
      */
     private array $effect = [];
 
@@ -223,7 +223,7 @@ class Spell
     }
 
     /**
-     * @return array<string>|null
+     * @return array<null|array<int>>|null
      */
     public function getEffect(): ?array
     {
@@ -231,7 +231,7 @@ class Spell
     }
 
     /**
-     * @param array<string> $effect
+     * @param array<null|array<int>> $effect
      */
     public function setEffect(array $effect): self
     {

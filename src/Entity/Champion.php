@@ -125,7 +125,7 @@ class Champion
     /**
      * @ORM\ManyToOne(targetEntity=InfoChampion::class, inversedBy="champions")
      */
-    private $infoChampion;
+    private ?infoChampion $infoChampion;
 
     public function __construct()
     {

@@ -20,27 +20,27 @@ class CoolDownSpell
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private int $level1;
+    private ?int $level1;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private int $level2;
+    private ?int $level2;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private int $level3;
+    private ?int $level3;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private int $level4;
+    private ?int $level4;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private int $level5;
+    private ?int $level5;
 
     /**
      * @ORM\Column(type="datetime_immutable")

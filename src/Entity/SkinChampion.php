@@ -21,9 +21,9 @@ class SkinChampion
     private int $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private int $skinId;
+    private ?string $skinId;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
@@ -62,12 +62,12 @@ class SkinChampion
         return $this->id;
     }
 
-    public function getSkinId(): ?int
+    public function getSkinId(): ?string
     {
         return $this->skinId;
     }
 
-    public function setSkinId(int $skinId): self
+    public function setSkinId(?string $skinId): self
     {
         $this->skinId = $skinId;
 
