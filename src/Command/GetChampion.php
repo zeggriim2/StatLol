@@ -510,7 +510,7 @@ class GetChampion extends Command
                 $rangeSpellChampion->$method($range[$i]);
             }
         } else {
-            $rangeSpellChampion->setLevel1($range);
+            $rangeSpellChampion->setLevel1(0);
         }
 
         $this->doctrine->getManager()->persist($rangeSpellChampion);
