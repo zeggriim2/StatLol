@@ -8,6 +8,7 @@ use App\Services\API\LOL\Model\DataDragon\Item\ItemStat;
 
 class Item
 {
+    private ?int $id = null;
     private string $name;
     private string $description;
     private string $colloq;
@@ -31,7 +32,18 @@ class Item
      */
     private array $maps;
     private ItemStat $stats;
-    private int $depth;
+    private ?int $depth = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(?int $id): Item
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     public function getName(): string
     {
@@ -178,12 +190,12 @@ class Item
         return $this;
     }
 
-    public function getDepth(): int
+    public function getDepth(): ?int
     {
         return $this->depth;
     }
 
-    public function setDepth(int $depth): Item
+    public function setDepth(?int $depth): Item
     {
         $this->depth = $depth;
         return $this;

@@ -28,7 +28,7 @@ class ItemApi
      /**
      * @return array<array-key,Item>|null
      */
-    public function item(string $version, string $lang): ?array
+    public function items(string $version, string $lang): ?array
     {
         if (strlen($version) <= 0 || strlen($lang) <= 0) {
             return null;
@@ -57,6 +57,35 @@ class ItemApi
         return $itemsDenormalize;
     }
 
+
+    public function item(int $id, string $version, string $lang): ?Item
+    {
+        if (strlen($version) <= 0 || strlen($lang) <= 0) {
+            return null;
+        }
+
+        $url = $this->baseApi->constructUrl(
+            self::URL_ITEMS,
+            [
+                "version" => $version,
+                "lang" => $lang
+            ]
+        );
+
+        /** @var array<array-key,array<array<string, int|string>>>|null $items */
+        $items = $this->baseApi->callApi(
+            $url,
+            Request::METHOD_GET,
+        );
+
+        if (!array_key_exists($id, $items['data'])) {
+            return null;
+        }
+        $itemDenormalize = $this->denormalize($items['data'][$id], Item::class);
+        $itemDenormalize->setId($id);
+        return $itemDenormalize;
+    }
+
     /**
      * @param array<array-key,array<string,int|string>> $datas
      * @param string $type
@@ -67,9 +96,18 @@ class ItemApi
         if (is_array($datas)) {
             $listDataDenormalize = [];
             foreach ($datas as $key => $data) {
-                $listDataDenormalize[] = $this->denormalizer->denormalize($data, $type);
+                $listDataDenormalize[$key] = $this->denormalizer->denormalize($data, $type);
             }
             return $listDataDenormalize;
         }
+    }
+
+    /**
+     * @param array<string,int|string> $data
+     * @return Item
+     */
+    private function denormalize($data, string $type)
+    {
+        return $this->denormalizer->denormalize($data, $type);
     }
 }

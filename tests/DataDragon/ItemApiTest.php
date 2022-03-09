@@ -17,12 +17,19 @@ class ItemApiTest extends KernelTestCase
 
     public function testItems()
     {
-        $items = $this->itemApi->item("12.3.1", "fr_FR");
+        $items = $this->itemApi->items("12.3.1", "fr_FR");
 
         $this->assertIsArray($items);
 
         foreach ($items as $item) {
             $this->assertInstanceOf(Item::class, $item);
         }
+    }
+
+    public function testItem()
+    {
+        $item = $this->itemApi->item(1018, "12.3.1", "fr_FR");
+
+        $this->assertInstanceOf(Item::class, $item);
     }
 }
