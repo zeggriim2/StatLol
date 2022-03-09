@@ -11,32 +11,33 @@ use App\Services\API\LOL\Model\DataDragon\Champion\ChampionSpell;
 
 class Champion
 {
+    private ?string $version;
     private string $id;
     private string $key;
     private string $name;
     private string $title;
-    private ChampionImage $image;
     private string $blurb;
+    private ChampionInfo $info;
+    private ChampionImage $image;
     /**
      * @var array<string>
      */
     private array $tags;
-    private string $partype;
-    private ChampionInfo $info;
+    private ?string $partype = null;
     private ChampionStat $stats;
-    private ?string $version;
-
     /**
      * @var ChampionSkin[]|null
      */
     private ?array $skins;
     private ?string $lore;
-
     /**
      * @var array<string>|null
      */
     private ?array $allytips;
-
+    /**
+     * @var array<string>|null
+     */
+    private ?array $enemytips;
     /**
      * @var ChampionSpell[]|null
      */
@@ -149,12 +150,12 @@ class Champion
         return $this;
     }
 
-    public function getPartype(): string
+    public function getPartype(): ?string
     {
         return $this->partype;
     }
 
-    public function setPartype(string $partype): Champion
+    public function setPartype(?string $partype): Champion
     {
         $this->partype = $partype;
         return $this;
@@ -213,6 +214,23 @@ class Champion
     public function setAllytips(?array $allytips): Champion
     {
         $this->allytips = $allytips;
+        return $this;
+    }
+
+    /**
+     * @return array<string>|null
+     */
+    public function getEnemytips(): ?array
+    {
+        return $this->enemytips;
+    }
+
+    /**
+     * @param array<string>|null $enemytips
+     */
+    public function setEnemytips(?array $enemytips): Champion
+    {
+        $this->enemytips = $enemytips;
         return $this;
     }
 

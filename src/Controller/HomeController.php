@@ -2,21 +2,23 @@
 
 namespace App\Controller;
 
-use App\Services\API\LOL\DataDragon\ItemApi;
 use App\Services\API\LOL\MatchApi;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Services\API\LOL\DataDragon\ItemApi;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Services\API\LOL\DataDragon\ChampionApi;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @param ItemApi $itemApi
+     * @param ChampionApi $championApi
      * @return Response
      */
-    public function home(ItemApi $itemApi): Response
+    public function home(ChampionApi $championApi): Response
     {
+        $champions = $championApi->champion("jinx", "12.3.1", "fr_FR");
 //        dd($matchApi->matchByMatchId("EUW1_5694485275"));
         return $this->render("home.html.twig");
     }

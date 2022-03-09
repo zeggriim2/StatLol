@@ -8,7 +8,10 @@ class ChampionStat
      * @var int|float
      */
     private $hp;
-    private int $hpperlevel;
+    /**
+     * @var int|float
+     */
+    private $hpperlevel;
     /**
      * @var int|float
      */
@@ -17,8 +20,14 @@ class ChampionStat
      * @var int|float
      */
     private $mpperlevel;
-    private int $movespeed;
-    private int $armor;
+    /**
+     * @var int|float
+     */
+    private $movespeed;
+    /**
+     * @var int|float
+     */
+    private $armor;
     /**
      * @var int|float
      */
@@ -27,8 +36,14 @@ class ChampionStat
      * @var int|float
      */
     private $spellblock;
-    private float $spellblockperlevel;
-    private int $attackrange;
+    /**
+     * @var int|float
+     */
+    private $spellblockperlevel;
+    /**
+     * @var int|float
+     */
+    private $attackrange;
     /**
      * @var int|float
      */
@@ -45,8 +60,14 @@ class ChampionStat
      * @var int|float
      */
     private $mpregenperlevel;
-    private int $crit;
-    private int $critperlevel;
+    /**
+     * @var int|float
+     */
+    private $crit;
+    /**
+     * @var int|float
+     */
+    private $critperlevel;
     /**
      * @var int|float
      */
@@ -59,7 +80,10 @@ class ChampionStat
      * @var int|float
      */
     private $attackspeedperlevel;
-    private float $attackspeed;
+    /**
+     * @var int|float
+     */
+    private $attackspeed;
 
     /**
      * @return int|float
@@ -78,12 +102,18 @@ class ChampionStat
         return $this;
     }
 
-    public function getHpperlevel(): int
+    /**
+     * @return int|float
+     */
+    public function getHpperlevel()
     {
         return $this->hpperlevel;
     }
 
-    public function setHpperlevel(int $hpperlevel): ChampionStat
+    /**
+     * @param int|float $hpperlevel
+     */
+    public function setHpperlevel($hpperlevel): ChampionStat
     {
         $this->hpperlevel = $hpperlevel;
         return $this;
@@ -123,23 +153,35 @@ class ChampionStat
         return $this;
     }
 
-    public function getMovespeed(): int
+    /**
+     * @return int|float
+     */
+    public function getMovespeed()
     {
         return $this->movespeed;
     }
 
-    public function setMovespeed(int $movespeed): ChampionStat
+    /**
+     * @param int|float $movespeed
+     */
+    public function setMovespeed($movespeed): ChampionStat
     {
         $this->movespeed = $movespeed;
         return $this;
     }
 
-    public function getArmor(): int
+    /**
+     * @return int|float
+     */
+    public function getArmor()
     {
         return $this->armor;
     }
 
-    public function setArmor(int $armor): ChampionStat
+    /**
+     * @param int|float $armor
+     */
+    public function setArmor($armor): ChampionStat
     {
         $this->armor = $armor;
         return $this;
@@ -179,23 +221,35 @@ class ChampionStat
         return $this;
     }
 
-    public function getSpellblockperlevel(): float
+    /**
+     * @return int|float
+     */
+    public function getSpellblockperlevel()
     {
         return $this->spellblockperlevel;
     }
 
-    public function setSpellblockperlevel(float $spellblockperlevel): ChampionStat
+    /**
+     * @param int|float $spellblockperlevel
+     */
+    public function setSpellblockperlevel($spellblockperlevel): ChampionStat
     {
         $this->spellblockperlevel = $spellblockperlevel;
         return $this;
     }
 
-    public function getAttackrange(): int
+    /**
+     * @return int|float
+     */
+    public function getAttackrange()
     {
         return $this->attackrange;
     }
 
-    public function setAttackrange(int $attackrange): ChampionStat
+    /**
+     * @param int|float $attackrange
+     */
+    public function setAttackrange($attackrange): ChampionStat
     {
         $this->attackrange = $attackrange;
         return $this;
@@ -269,23 +323,35 @@ class ChampionStat
         return $this;
     }
 
-    public function getCrit(): int
+    /**
+     * @return int|float
+     */
+    public function getCrit()
     {
         return $this->crit;
     }
 
-    public function setCrit(int $crit): ChampionStat
+    /**
+     * @param int|float $crit
+     */
+    public function setCrit($crit): ChampionStat
     {
         $this->crit = $crit;
         return $this;
     }
 
-    public function getCritperlevel(): int
+    /**
+     * @return int|float
+     */
+    public function getCritperlevel()
     {
         return $this->critperlevel;
     }
 
-    public function setCritperlevel(int $critperlevel): ChampionStat
+    /**
+     * @param int|float $critperlevel
+     */
+    public function setCritperlevel($critperlevel): ChampionStat
     {
         $this->critperlevel = $critperlevel;
         return $this;
@@ -342,12 +408,18 @@ class ChampionStat
         return $this;
     }
 
-    public function getattackspeed(): float
+    /**
+     * @return int|float
+     */
+    public function getattackspeed()
     {
         return $this->attackspeed;
     }
 
-    public function setattackspeed(float $attackspeed): ChampionStat
+    /**
+     * @param int|float $attackspeed
+     */
+    public function setattackspeed($attackspeed): ChampionStat
     {
         $this->attackspeed = $attackspeed;
         return $this;

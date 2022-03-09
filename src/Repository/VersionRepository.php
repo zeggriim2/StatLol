@@ -19,6 +19,20 @@ class VersionRepository extends ServiceEntityRepository
         parent::__construct($registry, Version::class);
     }
 
+    /**
+     * @return Version[] Returns an array of Version objects
+     */
+    public function getVersionWithoutLolPatch()
+    {
+        return $this->createQueryBuilder("v")
+            ->where("v.name NOT LIKE :lolpatch")
+            ->andWhere("v.name NOT LIKE :zero")
+            ->setParameters(["lolpatch" => "%lolpatch%", "zero" => "0.%"])
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Version[] Returns an array of Version objects
     //  */

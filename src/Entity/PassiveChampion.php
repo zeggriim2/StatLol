@@ -2,16 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\VersionRepository;
+use App\Repository\PassiveChampionRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=VersionRepository::class)
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass=PassiveChampionRepository::class)
  */
-class Version
+class PassiveChampion
 {
     /**
      * @ORM\Id
@@ -21,9 +21,14 @@ class Version
     private int $id;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=50)
      */
     private string $name;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private string $description;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -31,13 +36,19 @@ class Version
     private \DateTimeImmutable $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="version")
+     * @ORM\ManyToOne(targetEntity=ImagePassive::class, inversedBy="passiveChampions")
+     */
+    private ?ImagePassive $imagePassive;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="passive")
      * @var Collection|Champion[]
      */
     private $champions;
 
     public function __construct()
     {
+        $this->createdAt = new DateTimeImmutable();
         $this->champions = new ArrayCollection();
     }
 
@@ -58,7 +69,19 @@ class Version
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -70,12 +93,16 @@ class Version
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist
-    */
-    public function updatedTimestamps(): void
+    public function getImagePassive(): ?ImagePassive
     {
-        $this->setCreatedAt(new \DateTimeImmutable('now'));
+        return $this->imagePassive;
+    }
+
+    public function setImagePassive(?ImagePassive $imagePassive): self
+    {
+        $this->imagePassive = $imagePassive;
+
+        return $this;
     }
 
     /**
@@ -90,7 +117,7 @@ class Version
     {
         if (!$this->champions->contains($champion)) {
             $this->champions[] = $champion;
-            $champion->setVersion($this);
+            $champion->setPassive($this);
         }
 
         return $this;
@@ -100,8 +127,8 @@ class Version
     {
         if ($this->champions->removeElement($champion)) {
             // set the owning side to null (unless already changed)
-            if ($champion->getVersion() === $this) {
-                $champion->setVersion(null);
+            if ($champion->getPassive() === $this) {
+                $champion->setPassive(null);
             }
         }
 

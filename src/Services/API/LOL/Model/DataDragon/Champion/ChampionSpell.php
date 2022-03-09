@@ -3,6 +3,7 @@
 namespace App\Services\API\LOL\Model\DataDragon\Champion;
 
 use App\Services\API\LOL\Model\DataDragon\Commun\Image;
+use App\Services\API\LOL\Model\DataDragon\Champion\ChampionSpellLevelTip;
 
 class ChampionSpell
 {
@@ -10,10 +11,7 @@ class ChampionSpell
     private string $name;
     private string $description;
     private string $tooltip;
-    /**
-     * @var array<string,array<string>>
-     */
-    private array $leveltip;
+    private ChampionSpellLevelTip $leveltip;
     private int $maxrank;
     /**
      * @var array<int>
@@ -34,11 +32,11 @@ class ChampionSpell
      */
     private array $effectBurn;
     private string $costType;
-    private string $maxammo;
+    private ?string $maxammo = null;
      /**
-     * @var array<int>
+     * @var array<int>|string
      */
-    private array $range;
+    private $range;
     private string $rangeBurn;
     private Image $image;
     private string $resource;
@@ -87,20 +85,12 @@ class ChampionSpell
         return $this;
     }
 
-
-    /**
-     * @return array<string,array<string>>
-     */
-    public function getLeveltip(): array
+    public function getLeveltip(): ChampionSpellLevelTip
     {
         return $this->leveltip;
     }
 
-
-    /**
-     * @param array<string,array<string>> $leveltip
-     */
-    public function setLeveltip(array $leveltip): ChampionSpell
+    public function setLeveltip(ChampionSpellLevelTip $leveltip): ChampionSpell
     {
         $this->leveltip = $leveltip;
         return $this;
@@ -219,29 +209,29 @@ class ChampionSpell
         return $this;
     }
 
-    public function getMaxammo(): string
+    public function getMaxammo(): ?string
     {
         return $this->maxammo;
     }
 
-    public function setMaxammo(string $maxammo): ChampionSpell
+    public function setMaxammo(?string $maxammo): ChampionSpell
     {
         $this->maxammo = $maxammo;
         return $this;
     }
 
     /**
-     * @return array<int>
+     * @return array<int>|string
      */
-    public function getRange(): array
+    public function getRange()
     {
         return $this->range;
     }
 
     /**
-     * @param array<int> $range
+     * @param array<int>|string $range
      */
-    public function setRange(array $range): ChampionSpell
+    public function setRange($range): ChampionSpell
     {
         $this->range = $range;
         return $this;

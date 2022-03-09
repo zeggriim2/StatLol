@@ -2,16 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\VersionRepository;
+use App\Repository\ParTypeChampionRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=VersionRepository::class)
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass=ParTypeChampionRepository::class)
  */
-class Version
+class ParTypeChampion
 {
     /**
      * @ORM\Id
@@ -21,7 +21,7 @@ class Version
     private int $id;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=30)
      */
     private string $name;
 
@@ -31,13 +31,14 @@ class Version
     private \DateTimeImmutable $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="version")
+     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="parType")
      * @var Collection|Champion[]
      */
     private $champions;
 
     public function __construct()
     {
+        $this->createdAt = new DateTimeImmutable();
         $this->champions = new ArrayCollection();
     }
 
@@ -58,7 +59,7 @@ class Version
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -68,14 +69,6 @@ class Version
         $this->createdAt = $createdAt;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PrePersist
-    */
-    public function updatedTimestamps(): void
-    {
-        $this->setCreatedAt(new \DateTimeImmutable('now'));
     }
 
     /**
@@ -90,7 +83,7 @@ class Version
     {
         if (!$this->champions->contains($champion)) {
             $this->champions[] = $champion;
-            $champion->setVersion($this);
+            $champion->setParType($this);
         }
 
         return $this;
@@ -100,8 +93,8 @@ class Version
     {
         if ($this->champions->removeElement($champion)) {
             // set the owning side to null (unless already changed)
-            if ($champion->getVersion() === $this) {
-                $champion->setVersion(null);
+            if ($champion->getParType() === $this) {
+                $champion->setParType(null);
             }
         }
 

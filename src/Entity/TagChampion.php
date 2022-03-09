@@ -2,16 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\VersionRepository;
+use App\Repository\TagChampionRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=VersionRepository::class)
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass=TagChampionRepository::class)
  */
-class Version
+class TagChampion
 {
     /**
      * @ORM\Id
@@ -23,21 +23,22 @@ class Version
     /**
      * @ORM\Column(type="string", length=60)
      */
-    private string $name;
+    private string $label;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private \DateTimeImmutable $createdAt;
+    private \DateTimeImmutable $created_at;
 
     /**
-     * @ORM\OneToMany(targetEntity=Champion::class, mappedBy="version")
+     * @ORM\ManyToMany(targetEntity=Champion::class, mappedBy="tags")
      * @var Collection|Champion[]
      */
     private $champions;
 
     public function __construct()
     {
+        $this->created_at = new DateTimeImmutable();
         $this->champions = new ArrayCollection();
     }
 
@@ -46,36 +47,28 @@ class Version
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getLabel(): ?string
     {
-        return $this->name;
+        return $this->label;
     }
 
-    public function setName(string $name): self
+    public function setLabel(string $label): self
     {
-        $this->name = $name;
+        $this->label = $label;
 
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PrePersist
-    */
-    public function updatedTimestamps(): void
-    {
-        $this->setCreatedAt(new \DateTimeImmutable('now'));
     }
 
     /**
@@ -90,7 +83,7 @@ class Version
     {
         if (!$this->champions->contains($champion)) {
             $this->champions[] = $champion;
-            $champion->setVersion($this);
+            $champion->addTag($this);
         }
 
         return $this;
@@ -99,10 +92,7 @@ class Version
     public function removeChampion(Champion $champion): self
     {
         if ($this->champions->removeElement($champion)) {
-            // set the owning side to null (unless already changed)
-            if ($champion->getVersion() === $this) {
-                $champion->setVersion(null);
-            }
+            $champion->removeTag($this);
         }
 
         return $this;
