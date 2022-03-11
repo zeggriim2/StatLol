@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,27 @@ class Item
      * @ORM\Column(type="integer")
      */
     private int $ItemId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Version::class, inversedBy="items")
+     */
+    private ?Version $version;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ImageItem::class, inversedBy="items")
+     */
+    private ?ImageItem $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=TagItem::class, inversedBy="items")
+     * @var Collection|TagItem[]
+     */
+    private $tags;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +126,54 @@ class Item
     public function setItemId(int $ItemId): self
     {
         $this->ItemId = $ItemId;
+
+        return $this;
+    }
+
+    public function getVersion(): ?Version
+    {
+        return $this->version;
+    }
+
+    public function setVersion(?Version $version): self
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    public function getImage(): ?ImageItem
+    {
+        return $this->image;
+    }
+
+    public function setImage(?ImageItem $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TagItem[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(TagItem $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+
+        return $this;
+    }
+
+    public function removeTag(TagItem $tag): self
+    {
+        $this->tags->removeElement($tag);
 
         return $this;
     }

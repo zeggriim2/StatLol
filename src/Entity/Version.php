@@ -36,9 +36,16 @@ class Version
      */
     private $champions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Item::class, mappedBy="version")
+     * @var Collection|Item[]
+     */
+    private $items;
+
     public function __construct()
     {
         $this->champions = new ArrayCollection();
+        $this->items = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,6 +109,36 @@ class Version
             // set the owning side to null (unless already changed)
             if ($champion->getVersion() === $this) {
                 $champion->setVersion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Item[]
+     */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function addItem(Item $item): self
+    {
+        if (!$this->items->contains($item)) {
+            $this->items[] = $item;
+            $item->setVersion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(Item $item): self
+    {
+        if ($this->items->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getVersion() === $this) {
+                $item->setVersion(null);
             }
         }
 

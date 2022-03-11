@@ -34,16 +34,15 @@ class GetItem extends Command
         // On récupère tout les versions
         /** @var VersionRepository $versionRepo **/
         $versionRepo = $this->doctrine->getRepository(Version::class);
-        /** @var Version[] $versions **/
         $versions = $versionRepo->getVersionWithoutLolPatch();
 
         foreach ($versions as $version) {
             $items = $this->itemApi->items($version->getName(), "fr_FR");
-            dd($items);
         }
 
         return Command::SUCCESS;
     }
+
 
     public function __construct(
         ManagerRegistry $doctrine,
