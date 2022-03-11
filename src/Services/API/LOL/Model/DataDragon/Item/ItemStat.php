@@ -12,7 +12,7 @@ class ItemStat
     private ?int $flatArmorMod;
     private ?int $flatSpellBlockMod;
     private ?int $flatPhysicalDamageMod;
-    private ?int $flatMovementSpeedMod;
+    private ?int $flatMovementSpeedMod; 
     private ?float $percentLifeStealMod;
     /**
      * @var float|int|null
@@ -151,7 +151,7 @@ class ItemStat
     /**
      * @return int|float|null
      */
-    public function getPercentMovementSpeedMod()
+    public function getPercentMovementSpeedMod(): ?float
     {
         return $this->percentMovementSpeedMod;
     }
@@ -159,7 +159,7 @@ class ItemStat
     /**
      * @param int|float|null $percentMovementSpeedMod
      */
-    public function setPercentMovementSpeedMod($percentMovementSpeedMod): ItemStat
+    public function setPercentMovementSpeedMod(?float $percentMovementSpeedMod): ItemStat
     {
         $this->percentMovementSpeedMod = $percentMovementSpeedMod;
         return $this;

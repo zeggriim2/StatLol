@@ -16,7 +16,7 @@ class Item
     /**
      * @var array<string>
      */
-    private array $from;
+    private ?array $from = null;
     /**
      * @var array<string>
      */
@@ -90,17 +90,17 @@ class Item
     }
 
     /**
-     * @return array<string>
+     * @return array<string>|null
      */
-    public function getFrom(): array
+    public function getFrom(): ?array
     {
         return $this->from;
     }
 
     /**
-     * @param array<string> $from
+     * @param array<string>|null $from
      */
-    public function setFrom(array $from): Item
+    public function setFrom(?array $from): Item
     {
         $this->from = $from;
         return $this;

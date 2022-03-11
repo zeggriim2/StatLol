@@ -51,7 +51,7 @@ class ItemApi
         if (is_null($items)) {
             return null;
         }
-
+        
         /** @var array<array-key,Item>|null $itemsDenormalize */
         $itemsDenormalize = $this->denormalizeArray($items['data'], Item::class);
         return $itemsDenormalize;
@@ -96,7 +96,10 @@ class ItemApi
         if (is_array($datas)) {
             $listDataDenormalize = [];
             foreach ($datas as $key => $data) {
-                $listDataDenormalize[$key] = $this->denormalizer->denormalize($data, $type);
+                /** @var Item $itemObject **/
+                $itemObject = $this->denormalizer->denormalize($data, $type);
+                $itemObject->setId((int)$key);
+                $listDataDenormalize[$key] = $itemObject;
             }
             return $listDataDenormalize;
         }
