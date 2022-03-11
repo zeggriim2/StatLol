@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\StatItemRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,72 +16,82 @@ class StatItem
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $PercentAttackSpellMod;
+    private ?float $PercentAttackSpellMod;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $FlatHPPoolMod;
+    private ?int $FlatHPPoolMod;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $FlatCritChanceMod;
+    private ?float $FlatCritChanceMod;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $FlatMagicDamageMod;
+    private ?int $FlatMagicDamageMod;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $FlatMPPoolMod;
+    private ?int $FlatMPPoolMod;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $FlatArmorMod;
+    private ?int $FlatArmorMod;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $FlatSpellBlockMod;
+    private ?int $FlatSpellBlockMod;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $FlatPhysicalDamageMod;
+    private ?int $FlatPhysicalDamageMod;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $FlatMovemenentSpeedMod;
+    private ?int $FlatMovemenentSpeedMod;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $PercentLifeStealMod;
+    private ?float $PercentLifeStealMod;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $FlatHPRegenMod;
+    private ?float $FlatHPRegenMod;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $PercentMovementSpeedMod;
+    private ?float $PercentMovementSpeedMod;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Item::class, mappedBy="stat", cascade={"persist", "remove"})
+     */
+    private $item;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -239,6 +250,28 @@ class StatItem
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getItem(): ?Item
+    {
+        return $this->item;
+    }
+
+    public function setItem(?Item $item): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($item === null && $this->item !== null) {
+            $this->item->setStat(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($item !== null && $item->getStat() !== $this) {
+            $item->setStat($this);
+        }
+
+        $this->item = $item;
 
         return $this;
     }

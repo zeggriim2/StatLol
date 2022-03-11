@@ -42,6 +42,11 @@ class GoldItem
      */
     private \DateTimeImmutable $createdAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Item::class, mappedBy="gold", cascade={"persist", "remove"})
+     */
+    private $item;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -108,6 +113,28 @@ class GoldItem
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getItem(): ?Item
+    {
+        return $this->item;
+    }
+
+    public function setItem(?Item $item): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($item === null && $this->item !== null) {
+            $this->item->setGold(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($item !== null && $item->getGold() !== $this) {
+            $item->setGold($this);
+        }
+
+        $this->item = $item;
 
         return $this;
     }

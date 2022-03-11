@@ -60,6 +60,16 @@ class Item
      */
     private $tags;
 
+    /**
+     * @ORM\OneToOne(targetEntity=GoldItem::class, inversedBy="item", cascade={"persist", "remove"})
+     */
+    private $gold;
+
+    /**
+     * @ORM\OneToOne(targetEntity=StatItem::class, inversedBy="item", cascade={"persist", "remove"})
+     */
+    private $stat;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -174,6 +184,30 @@ class Item
     public function removeTag(TagItem $tag): self
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getGold(): ?GoldItem
+    {
+        return $this->gold;
+    }
+
+    public function setGold(?GoldItem $gold): self
+    {
+        $this->gold = $gold;
+
+        return $this;
+    }
+
+    public function getStat(): ?StatItem
+    {
+        return $this->stat;
+    }
+
+    public function setStat(?StatItem $stat): self
+    {
+        $this->stat = $stat;
 
         return $this;
     }
