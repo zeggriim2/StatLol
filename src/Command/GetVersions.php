@@ -33,9 +33,9 @@ class GetVersions extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $versions  = $this->generalApi->versions();
+        $versionsApi  = $this->generalApi->versions();
 
-        if ($versions === null) {
+        if ($versionsApi === null) {
             $io->error("Erreur aucune verions n'a été trouvé !!!"); // TODO
             return Command::FAILURE;
         }
@@ -43,7 +43,8 @@ class GetVersions extends Command
         $entityManager = $this->doctrine->getManager();
 
         $nbVersionAdd = 0;
-        foreach ($versions as $versionApi) {
+        $versionsApi = array_reverse($versionsApi);
+        foreach ($versionsApi as $versionApi) {
             $nbVersionAdd++;
 
             /** @var Version|null $version */
